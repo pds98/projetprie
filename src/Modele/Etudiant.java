@@ -2,18 +2,18 @@ package Modele;
 
 public class Etudiant
 {
-
-    private String nomEtu;
-    private String prenomEtu;
+    private int idEtudiant;
+    private String nom;
+    private String prenom;
     private String telephone;
     private String email;
 
 
 
 
-    public Etudiant(String nomEtu, String prenomEtu, String telephone, String email, int idEtudiant) {
-        this.nomEtu = nomEtu;
-        this.prenomEtu = prenomEtu;
+    public Etudiant(String nom, String prenom, String telephone, String email, int idEtudiant) {
+        this.nom = nom;
+        this.prenom = prenom;
         this.telephone = telephone;
         this.email = email;
         this.idEtudiant = idEtudiant;
@@ -21,7 +21,6 @@ public class Etudiant
 
 
 
-    private int idEtudiant;
 
     public int getIdEtudiant() {
         return idEtudiant;
@@ -31,20 +30,19 @@ public class Etudiant
         this.idEtudiant = idEtudiant;
     }
 
-    public String getNomEtu() {
-        return nomEtu;
+    public String getNom() {
+        return nom;
+    }
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
-    public void setNomEtu(String nomEtu) {
-        this.nomEtu = nomEtu;
+    public String getPrenom() {
+        return prenom;
     }
 
-    public String getPrenomEtu() {
-        return prenomEtu;
-    }
-
-    public void setPrenomEtu(String prenomEtu) {
-        this.prenomEtu = prenomEtu;
+    public void setPrenom(String prenom) {
+        this.prenom= prenom;
     }
 
     public String getTelephone() {
@@ -67,15 +65,15 @@ public class Etudiant
     //ethodes
 
     public void reserverSalle() {
-        System.out.println(prenomEtu + " " + nomEtu + " a réserver une salle.");
+        System.out.println(prenom + " " + nom + " a reserver une salle.");
     }
 
     public void annulerReservation() {
-        System.out.println(prenomEtu + " " + nomEtu + " a annulr sa réservation.");
+        System.out.println(prenom + " " + nom + " a annulr sa reservation.");
     }
 
     public void consulterReservation() {
-        System.out.println(prenomEtu + " " + nomEtu + " consulter ses réservations.");
+        System.out.println(prenom + " " + nom + " consulter ses reservations.");
     }
 
 }

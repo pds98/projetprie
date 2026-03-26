@@ -3,18 +3,16 @@ package Modele;
 public class Salle
 
 {
-
     private int idSalle;
-    private int capacite;
-    private String statut;
-
-
 
     public Salle(int idSalle, int capacite, String statut) {
         this.idSalle = idSalle;
         this.capacite = capacite;
         this.statut = statut;
     }
+
+    private int capacite;
+    private String statut;
 
 
 
@@ -43,9 +41,9 @@ public class Salle
     }
 
 
-    public boolean estDisponible() {
-        return this.statut.equalsIgnoreCase("disponible");
-    }
+
+
+
 
     public void libererSalle() {
         this.statut = "disponible";
