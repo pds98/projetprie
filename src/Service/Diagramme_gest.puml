@@ -1,0 +1,94 @@
+@startuml
+
+class Salle {
+  - idSalle : int
+  - capacite : int
+  - statut : String
+  + estDisponible(debut : LocalDateTime, fin : LocalDateTime) : boolean
+  + libererSalle() : void
+  + afficherInformation() : void
+}
+
+class Etudiant {
+  - idEtudiant : int
+  - nom : String
+  - prenom : String
+  - telephone : String
+  - email : String
+  + reserverSalle() : void
+  + annulerReservation() : void
+  + consulterReservations() : void
+  + afficherInformation() : void
+}
+
+class Priere {
+  - idPriere : int
+  - nomPriere : String
+  - description : String
+  + afficherInfos() : void
+}
+
+class Reservation {
+  - idReservation : int
+  - dateHeureDebut : LocalDateTime
+  - dateHeureFin : LocalDateTime
+  - nombrePersonnes : int
+  - motif : String
+  - statut : String
+  + creerReservation() : void
+  + annulerReservation() : void
+  + modifierReservation() : void
+  + confirmerReservation() : void
+  + afficherReservation() : void
+}
+
+class Evenement {
+  - idEvenement : int
+  - nom : String
+  - dateCreation : LocalDateTime
+  - description : String
+  - lieu : String
+  - statut : String
+  + modifierEvenement() : void
+  + afficherEvenement() : void
+  + supprimerEvenement() : void
+}
+
+class Groupe {
+  - idGroupe : int
+  - nom : String
+  - description : String
+  + ajouterMembre() : void
+  + supprimerMembre() : void
+  + afficherMembres() : void
+}
+
+class Forum {
+  - idDiscussion : int
+  - sujet : String
+  - dateCreation : LocalDateTime
+  + afficherDiscussion() : void
+}
+
+class Message {
+  - idMessage : int
+  - contenu : String
+  - dateCreation : LocalDateTime
+  + modifierMessage() : void
+  + supprimerMessage() : void
+  + afficherMessage() : void
+}
+
+' ================= RELATIONS =================
+
+Etudiant "1" -- "0..*" Reservation : effectue
+Salle "1" -- "0..*" Reservation : concerne
+Priere "1" -- "0..*" Reservation : type
+
+Groupe "0..*" -- "0..*" Etudiant : membres
+
+Forum "1" -- "0..*" Message : contient
+
+Evenement "0..*" -- "0..*" Etudiant : participants
+
+@enduml
