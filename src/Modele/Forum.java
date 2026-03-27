@@ -16,7 +16,7 @@ public class Forum {
     }
 
 
-    public void AvoirInfo(){
+    public void AfficherInfo(){
 
     }
 }

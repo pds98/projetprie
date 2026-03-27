@@ -38,7 +38,7 @@ public class Message {
         DateCreation = dateCreation;
     }
 
-    public void AvoirInfo(){
+    public void AfficherInfo(){
 
     }
 }

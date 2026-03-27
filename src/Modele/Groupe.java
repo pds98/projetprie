@@ -37,7 +37,7 @@ public class Groupe {
         this.description = description;
     }
 
-    public void AvoirInfo(){
+    public void AfficherInfo(){
 
     }
 }

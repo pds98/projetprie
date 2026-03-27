@@ -70,5 +70,5 @@ public class Evenement {
         this.statut = statut;
     }
 
-    public void AvoirInfo(){}
+    public void AfficherInfo(){}
 }
