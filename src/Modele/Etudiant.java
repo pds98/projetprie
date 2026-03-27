@@ -62,18 +62,8 @@ public class Etudiant
     }
 
 
-    //ethodes
+    public void AvoirInfo(){
 
-    public void reserverSalle() {
-        System.out.println(prenom + " " + nom + " a reserver une salle.");
-    }
-
-    public void annulerReservation() {
-        System.out.println(prenom + " " + nom + " a annulr sa reservation.");
-    }
-
-    public void consulterReservation() {
-        System.out.println(prenom + " " + nom + " consulter ses reservations.");
     }
 
 }
