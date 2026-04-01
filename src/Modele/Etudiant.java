@@ -62,7 +62,14 @@ public class Etudiant
     }
 
 
-    public void AvoirInfo(){
+    public void AfficherInfo()
+    {
+        System.out.println("=== Étudiant ===");
+        System.out.println("IDEtudiant       : " + idEtudiant);
+        System.out.println("Nom       : " + nom);
+        System.out.println("Prénom    : " + prenom);
+        System.out.println("Téléphone : " + telephone);
+        System.out.println("Email     : " + email);
 
     }
 

@@ -126,7 +126,7 @@ public class Reservation {
         System.out.println("=== Réservation ===");
         System.out.println("ID            : " + id);
         System.out.println("ID Salle      : " + idSalle);
-        System.out.println("ID Etudiant   : " + idEtu);
+        System.out.println("ID Etudiant   : " + idEtudiant);
         System.out.println("ID Priere     : " + idPriere);
         System.out.println("Début         : " + debut);
         System.out.println("Fin           : " + fin);
@@ -135,4 +135,6 @@ public class Reservation {
         System.out.println("Est reserve   : " + estReserver);
 
 
+    }
 }
+
