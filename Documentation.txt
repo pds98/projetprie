@@ -1,0 +1,46 @@
+
+pour la maj vers spring:
+
+start.spring.io
+
+-->chosiir les outils de build  maven ou graddle ==>go sur maven pck outil de build simple
+nous simplifie pour ne pas intaller des  jar et congif seulmeent
+
+--->verison : 3.5...
+
+--> java17
+
+--> dependencies ajouter ===== --> Spring Web ,JDBC API,MySQL Driver,ManaDB Driver,SQLite Diver,PostgresQL Diver,Spring Data SPA
+
+
+
+======START=====
+
+Dans ressources =
+on a application.properties --> il ns sert a ← config BD, port, etc.
+
+l'applicaiton expose une apirest
+spring vas gerer tout ce qui est bd ,INJECTIONS etc..
+
+
+
+
+
+---->Architecture:
+nouveau
+gestion-priere/
+
+
+
+  entity/       (classes JPA avec @Entity)
+ →   repository/   (interfaces JpaRepository,  accès à la BD)
+ →   service/      (classes @Service  logique métier)
+ →   controller/   (classes @RestController = API REST , interface ui)
+ →   application.properties (Spring gère tout ce qui conn a la bd)
+
+
+ POM.XML=====>maven fichier ki montre a java et lui dit voici les bibliotheque aue j ai besoin
+ l'ancien c'etait jar (telecharger manuellemennt ) la je declare et maven les telecharges automatiquement
+
+
+
