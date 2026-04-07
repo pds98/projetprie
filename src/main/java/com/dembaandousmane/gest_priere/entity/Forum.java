@@ -1,35 +1,40 @@
 package com.dembaandousmane.gest_priere.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Entity
-@Table(name = "forum")
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Forum {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "IdForum")
-    private int idForum;
+    private Long id;
 
+    @Column(nullable = false)
     private String sujet;
 
-    @Column(name = "DateCreation")
+    @Column(nullable = false)
     private LocalDateTime dateCreation;
 
-    public Forum() {}
 
-    public Forum(String sujet, LocalDateTime dateCreation) {
-        this.sujet = sujet;
-        this.dateCreation = dateCreation;
+    @OneToMany(mappedBy = "forum")
+    private ArrayList<Message> messages;
+
+
+
+    public void addMessage(Message message){
+        messages.add(message);
     }
 
-    public int getIdForum() { return idForum; }
-    public void setIdForum(int idForum) { this.idForum = idForum; }
 
-    public String getSujet() { return sujet; }
-    public void setSujet(String sujet) { this.sujet = sujet; }
 
-    public LocalDateTime getDateCreation() { return dateCreation; }
-    public void setDateCreation(LocalDateTime dateCreation) { this.dateCreation = dateCreation; }
+
 }

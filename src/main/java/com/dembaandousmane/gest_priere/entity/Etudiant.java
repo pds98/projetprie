@@ -1,20 +1,60 @@
 package com.dembaandousmane.gest_priere.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.ArrayList;
 
 @Entity
-@Table(name = "etudiant")
+@Getter
+@Setter
+@Builder
 public class Etudiant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idEtudiant")
-    private int idEtudiant;
+    @Column(nullable = false)
+    private Long id;
 
+    @Column(nullable = false)
     private String nom;
+
+    @Column(nullable = false)
     private String prenom;
+
+    @Column(nullable = false,unique = true)
     private String telephone;
+
+    @Column(nullable = false,unique = true)
     private String email;
+
+    @OneToMany(mappedBy = "etudiant")
+    private ArrayList <Reservation> reservations;
+
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "detail_groupe",
+            joinColumns = @JoinColumn(name = "id_etudiant"),
+            inverseJoinColumns = @JoinColumn(name = "id_groupe" )
+    )
+    private ArrayList <Groupe> groupes;
+
+
+    @ManyToMany
+    @JoinTable(name = "detail_evenement",
+            joinColumns = @JoinColumn(name = "id_etudiant"),
+            inverseJoinColumns = @JoinColumn(name = "id_evenement"))
+    private ArrayList<Evenement> evenements;
+
+
+    @ManyToOne
+    @JoinColumn(name = "id_salle")
+    private Salle salle;
+
 
     public Etudiant() {}
 
@@ -25,18 +65,10 @@ public class Etudiant {
         this.email = email;
     }
 
-    public int getIdEtudiant() { return idEtudiant; }
-    public void setIdEtudiant(int idEtudiant) { this.idEtudiant = idEtudiant; }
 
-    public String getNom() { return nom; }
-    public void setNom(String nom) { this.nom = nom; }
 
-    public String getPrenom() { return prenom; }
-    public void setPrenom(String prenom) { this.prenom = prenom; }
 
-    public String getTelephone() { return telephone; }
-    public void setTelephone(String telephone) { this.telephone = telephone; }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+
+
 }

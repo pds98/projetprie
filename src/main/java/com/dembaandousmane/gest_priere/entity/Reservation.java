@@ -1,65 +1,54 @@
 package com.dembaandousmane.gest_priere.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Entity
-@Table(name = "reservation")
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    private int idSalle;
-    private int idEtudiant;
-    private int idPriere;
+    @OneToMany(mappedBy = "reservation")
+    private ArrayList <Salle> salles;
 
+
+    @ManyToOne
+    @JoinColumn(name = "id_etudiant")
+    private Etudiant etudiant ;
+
+    @ManyToOne
+    @JoinColumn(name="id_priere")
+    private Priere priere;
+
+    @Column(nullable = false)
     private LocalDateTime debut;
+
+    @Column(nullable = false)
     private LocalDateTime fin;
+
+
+    @Column(nullable = false)
     private int nombrePersonnes;
+
+    @Column(nullable = false)
     private String motif;
-    private boolean estReserver;
 
-    public Reservation() {}
+    @Column(nullable = false)
+    private boolean estActif;
 
-    public Reservation(int idSalle, int idEtudiant, int idPriere,
-                       LocalDateTime debut, LocalDateTime fin,
-                       int nombrePersonnes, String motif, boolean estReserver) {
-        this.idSalle = idSalle;
-        this.idEtudiant = idEtudiant;
-        this.idPriere = idPriere;
-        this.debut = debut;
-        this.fin = fin;
-        this.nombrePersonnes = nombrePersonnes;
-        this.motif = motif;
-        this.estReserver = estReserver;
-    }
+    @ManyToOne
+    @JoinColumn(name = "id_salle")
+    private Salle salle ;
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
 
-    public int getIdSalle() { return idSalle; }
-    public void setIdSalle(int idSalle) { this.idSalle = idSalle; }
-
-    public int getIdEtudiant() { return idEtudiant; }
-    public void setIdEtudiant(int idEtudiant) { this.idEtudiant = idEtudiant; }
-
-    public int getIdPriere() { return idPriere; }
-    public void setIdPriere(int idPriere) { this.idPriere = idPriere; }
-
-    public LocalDateTime getDebut() { return debut; }
-    public void setDebut(LocalDateTime debut) { this.debut = debut; }
-
-    public LocalDateTime getFin() { return fin; }
-    public void setFin(LocalDateTime fin) { this.fin = fin; }
-
-    public int getNombrePersonnes() { return nombrePersonnes; }
-    public void setNombrePersonnes(int nombrePersonnes) { this.nombrePersonnes = nombrePersonnes; }
-
-    public String getMotif() { return motif; }
-    public void setMotif(String motif) { this.motif = motif; }
-
-    public boolean isEstReserver() { return estReserver; }
-    public void setEstReserver(boolean estReserver) { this.estReserver = estReserver; }
 }

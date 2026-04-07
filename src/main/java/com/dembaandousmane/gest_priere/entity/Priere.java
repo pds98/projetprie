@@ -1,33 +1,27 @@
 package com.dembaandousmane.gest_priere.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
-@Table(name = "priere")
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Priere {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(nullable = false)
     private String nom;
 
+    @Column(nullable = false)
     private String description;
 
-    public Priere() {}
 
-    public Priere(int id, String nom, String description) {
-        this.id = id;
-        this.nom = nom;
-        this.description = description;
-    }
-
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
-
-    public String getNom() { return nom; }
-    public void setNom(String nom) { this.nom = nom; }
-
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
 }
+
+

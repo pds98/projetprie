@@ -1,35 +1,31 @@
 package com.dembaandousmane.gest_priere.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "message")
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "IdMessage")
-    private int idMessage;
+    private int id;
 
+    @Column(nullable = false)
     private String contenu;
 
     @Column(name = "DateCreation")
     private LocalDateTime dateCreation;
 
-    public Message() {}
+    @ManyToOne
+    @JoinColumn(name ="id_forum")
+    private Forum forum;
 
-    public Message(String contenu, LocalDateTime dateCreation) {
-        this.contenu = contenu;
-        this.dateCreation = dateCreation;
-    }
 
-    public int getIdMessage() { return idMessage; }
-    public void setIdMessage(int idMessage) { this.idMessage = idMessage; }
-
-    public String getContenu() { return contenu; }
-    public void setContenu(String contenu) { this.contenu = contenu; }
-
-    public LocalDateTime getDateCreation() { return dateCreation; }
-    public void setDateCreation(LocalDateTime dateCreation) { this.dateCreation = dateCreation; }
 }

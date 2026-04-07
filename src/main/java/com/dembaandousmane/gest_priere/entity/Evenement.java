@@ -1,47 +1,44 @@
 package com.dembaandousmane.gest_priere.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Entity
-@Table(name = "evenement")
+
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Evenement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
+    @Column(nullable = false)
     private String nom;
+
+    @Column(nullable = false)
     private LocalDateTime dateCreation;
+
+    @Column(nullable = false)
     private String description;
+
+    @Column(nullable = false)
     private String lieu;
-    private String statut;
 
-    public Evenement() {}
+    @Column(nullable = false)
+    private boolean estActif;
 
-    public Evenement(String nom, LocalDateTime dateCreation, String description, String lieu, String statut) {
-        this.nom = nom;
-        this.dateCreation = dateCreation;
-        this.description = description;
-        this.lieu = lieu;
-        this.statut = statut;
-    }
+    @ManyToMany(mappedBy = "etudiants")
+    private ArrayList<Etudiant> etudiants;
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
 
-    public String getNom() { return nom; }
-    public void setNom(String nom) { this.nom = nom; }
 
-    public LocalDateTime getDateCreation() { return dateCreation; }
-    public void setDateCreation(LocalDateTime dateCreation) { this.dateCreation = dateCreation; }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
 
-    public String getLieu() { return lieu; }
-    public void setLieu(String lieu) { this.lieu = lieu; }
-
-    public String getStatut() { return statut; }
-    public void setStatut(String statut) { this.statut = statut; }
 }

@@ -1,9 +1,16 @@
 package com.dembaandousmane.gest_priere.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
-@Table(name = "salle")
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Salle {
 
     @Id
@@ -11,26 +18,18 @@ public class Salle {
     @Column(name = "idSalle")
     private int idSalle;
 
+    @Column(nullable = false)
     private int capacite;
+
+    @Column(nullable = false)
     private String statut;
 
-    public Salle() {}
+    @OneToMany(mappedBy = "etudiant")
+    private List<Etudiant> etudiants;
 
-    public Salle(int capacite, String statut) {
-        this.capacite = capacite;
-        this.statut = statut;
-    }
 
-    public int getIdSalle() { return idSalle; }
-    public void setIdSalle(int idSalle) { this.idSalle = idSalle; }
+    @OneToMany(mappedBy = "salle")
+    private Reservation reservation;
 
-    public int getCapacite() { return capacite; }
-    public void setCapacite(int capacite) { this.capacite = capacite; }
 
-    public String getStatut() { return statut; }
-    public void setStatut(String statut) { this.statut = statut; }
-
-    public void libererSalle() {
-        this.statut = "disponible";
-    }
 }
