@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,9 +25,9 @@ public class Forum {
     @Column(nullable = false)
     private LocalDateTime dateCreation;
 
-
+    @Builder.Default
     @OneToMany(mappedBy = "forum")
-    private ArrayList<Message> messages;
+    private List<Message> messages = new ArrayList<>();
 
 
 

@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 
@@ -34,8 +35,12 @@ public class Evenement {
     @Column(nullable = false)
     private boolean estActif;
 
-    @ManyToMany(mappedBy = "etudiants")
-    private ArrayList<Etudiant> etudiants;
+
+    @Builder.Default
+    @ManyToMany(mappedBy = "evenements")
+    private List<Etudiant> etudiants = new ArrayList<>();
+
+
 
 
 

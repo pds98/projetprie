@@ -3,6 +3,7 @@ package com.dembaandousmane.gest_priere.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,12 +25,18 @@ public class Salle {
     @Column(nullable = false)
     private String statut;
 
-    @OneToMany(mappedBy = "etudiant")
-    private List<Etudiant> etudiants;
+    @OneToMany(mappedBy = "salle")
+    private List<Etudiant> etudiants = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "salle")
-    private Reservation reservation;
+    private  List<Reservation> reservations = new ArrayList<>();
 
+   public boolean estLibre(){
+       return this.statut == "libre";
+   }
 
+   public void libererSalle(){
+       this.statut = "libre";
+   }
 }

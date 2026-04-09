@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface EvenementRepository extends JpaRepository<Evenement, Integer> {
-    List<Evenement> findByStatut(String statut);
-    List<Evenement> findByLieu(String lieu);
+
 }

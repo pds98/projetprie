@@ -18,8 +18,6 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "reservation")
-    private ArrayList <Salle> salles;
 
 
     @ManyToOne

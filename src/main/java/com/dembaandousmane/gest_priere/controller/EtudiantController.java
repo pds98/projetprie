@@ -1,53 +1,69 @@
 package com.dembaandousmane.gest_priere.controller;
 
 import com.dembaandousmane.gest_priere.entity.Etudiant;
+import com.dembaandousmane.gest_priere.entity.Evenement;
+import com.dembaandousmane.gest_priere.entity.Salle;
+import com.dembaandousmane.gest_priere.repository.EtudiantRepository;
+import com.dembaandousmane.gest_priere.repository.EvenementRepository;
+import com.dembaandousmane.gest_priere.repository.SalleRepository;
 import com.dembaandousmane.gest_priere.service.EtudiantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/etudiants")
+//@RequestMapping("/api/etudiants")
 public class EtudiantController {
 
-    @Autowired
-    private EtudiantService etudiantService;
+    // @Autowired
+   // private EtudiantService etudiantService;
+
+    private EtudiantRepository etudiantRepository;
+    private EvenementRepository evenementRepository;
+    private SalleRepository salleRepository;
+
+    public EtudiantController(EtudiantRepository etudiantRepository, EvenementRepository evenementRepository, SalleRepository salleRepository){
+        this.etudiantRepository = etudiantRepository;
+        this.evenementRepository = evenementRepository;
+        this.salleRepository = salleRepository;
+    }
 
     @GetMapping
-    public List<Etudiant> getAll() {
-        return etudiantService.obtenirTousLesEtudiants();
+    public void AjouterEtudiant(@RequestParam String nom , @RequestParam String prenom){
+        LocalDateTime date = LocalDateTime.of(2026, 4, 8, 10, 30);
+
+        Salle salle = Salle.builder()
+                .capacite(22)
+                .statut("occupé")
+                .build();
+
+        Evenement evenement = Evenement.builder()
+                .nom("eid")
+                .description("fete")
+                .lieu("montreal")
+                .dateCreation(date)
+                .estActif(true)
+                .build();
+
+        Etudiant etudiant = Etudiant.builder().email("ousmanetelly30@gmail.com")
+                .nom(nom)
+                .prenom(prenom).telephone("500")
+                .salle(salle)
+                .build();
+
+        etudiant.ajouterEvenement(evenement);
+
+
+
+
+
+        evenementRepository.save(evenement);
+        salleRepository.save(salle);
+        etudiantRepository.save(etudiant);
+
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Etudiant> getById(@PathVariable int id) {
-        return etudiantService.obtenirEtudiant(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @PostMapping
-    public Etudiant create(@RequestBody Etudiant etudiant) {
-        return etudiantService.inscrireEtudiant(etudiant);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Etudiant> update(@PathVariable int id, @RequestBody Etudiant etudiant) {
-        try {
-            return ResponseEntity.ok(etudiantService.modifierEtudiant(id, etudiant));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable int id) {
-        try {
-            etudiantService.supprimerEtudiant(id);
-            return ResponseEntity.noContent().build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
 }

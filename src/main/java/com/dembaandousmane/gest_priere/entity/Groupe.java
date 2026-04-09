@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,8 +24,9 @@ public class Groupe {
     @Column(nullable = false)
     private String description;
 
-    @ManyToMany(mappedBy = "etudiants")
-    private ArrayList <Etudiant> etudiants;
+    @Builder.Default
+    @ManyToMany(mappedBy = "groupes")
+    private List<Etudiant> etudiants = new ArrayList<>();
 
 
 

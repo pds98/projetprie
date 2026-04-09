@@ -1,16 +1,17 @@
 package com.dembaandousmane.gest_priere.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Etudiant {
 
     @Id
@@ -41,29 +42,46 @@ public class Etudiant {
             joinColumns = @JoinColumn(name = "id_etudiant"),
             inverseJoinColumns = @JoinColumn(name = "id_groupe" )
     )
-    private ArrayList <Groupe> groupes;
+    private List <Groupe> groupes;
 
 
     @ManyToMany
     @JoinTable(name = "detail_evenement",
             joinColumns = @JoinColumn(name = "id_etudiant"),
             inverseJoinColumns = @JoinColumn(name = "id_evenement"))
-    private ArrayList<Evenement> evenements;
+    private List<Evenement> evenements;
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_salle")
     private Salle salle;
 
 
-    public Etudiant() {}
 
-    public Etudiant(String nom, String prenom, String telephone, String email) {
-        this.nom = nom;
-        this.prenom = prenom;
-        this.telephone = telephone;
-        this.email = email;
+    public void ajouterEvenement(Evenement evenement){
+        if (this.evenements == null){
+            this.evenements = new ArrayList<>();
+        }
+
+        evenements.add(evenement);
+
+
+        evenement.getEtudiants().add(this);
     }
+
+    public void supprimerEvenement(){}
+
+    public void AjouterGroupe(Groupe groupe){
+        if(this.groupes == null){
+            groupes = new ArrayList<>();
+        }
+
+        groupes.add(groupe);
+
+        groupe.getEtudiants().add(this);
+    }
+
+    public void supprimerGroupe(){}
 
 
 
