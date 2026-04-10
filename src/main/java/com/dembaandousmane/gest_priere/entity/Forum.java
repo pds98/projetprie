@@ -30,6 +30,10 @@ public class Forum {
     private List<Message> messages = new ArrayList<>();
 
 
+    @ManyToOne
+    @JoinColumn(name = "id_etudiant")
+    private Etudiant etudiant;
+
 
     public void addMessage(Message message){
         messages.add(message);

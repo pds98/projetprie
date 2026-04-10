@@ -32,7 +32,7 @@ public class Etudiant {
     private String email;
 
     @OneToMany(mappedBy = "etudiant")
-    private ArrayList <Reservation> reservations;
+    private List <Reservation> reservations;
 
 
 
@@ -57,8 +57,13 @@ public class Etudiant {
     private Salle salle;
 
 
+    @OneToMany(mappedBy = "etudiant")
+    private List<Forum> forums;
 
-    public void ajouterEvenement(Evenement evenement){
+
+
+
+    public void rejoindreEvenement(Evenement evenement){
         if (this.evenements == null){
             this.evenements = new ArrayList<>();
         }
@@ -69,9 +74,17 @@ public class Etudiant {
         evenement.getEtudiants().add(this);
     }
 
-    public void supprimerEvenement(){}
+    public void quitterEvenement(Evenement evenement){
 
-    public void AjouterGroupe(Groupe groupe){
+        if(this.evenements != null){
+            evenements.remove(evenement);
+        }
+        if(evenement.getEtudiants().contains(this)){
+            evenement.getEtudiants().remove(this);
+        }
+    }
+
+    public void RejoindreGroupe(Groupe groupe){
         if(this.groupes == null){
             groupes = new ArrayList<>();
         }
@@ -81,12 +94,59 @@ public class Etudiant {
         groupe.getEtudiants().add(this);
     }
 
-    public void supprimerGroupe(){}
+    public void quitterGroupe(Groupe groupe){
+
+        if(this.groupes != null){
+            groupes.remove(groupe);
+        }
+        if(groupe.getEtudiants() == this){
+            groupe.setEtudiants(null);
+        }
+
+    }
 
 
+  public void rejoindreForum(Forum forum){
+        if(this.forums == null ){
+            this.forums = new ArrayList<>();
+        }
+
+        forums.add(forum);
+
+        forum.setEtudiant(this);
+  }
+
+  public void quitterForum(Forum forum){
+        if(this.forums != null){
+            forums.remove(forum);
+        }
+
+        if(forum.getEtudiant() == this){
+            forum.setEtudiant(null);
+        }
 
 
+  }
 
+  public void ajouterReservation(Reservation reservation){
+        if(this.reservations == null){
+            this.reservations = new ArrayList<>();
+        }
+
+        reservations.add(reservation);
+        reservation.setEtudiant(this);
+
+  }
+  public void annulerReservation(Reservation reservation){
+
+        if(this.reservations != null){
+            reservations.remove(reservation);
+        }
+
+        if(reservation.getEtudiant()==this ){
+            reservation.setEtudiant(this);
+        }
+  }
 
 
 }
