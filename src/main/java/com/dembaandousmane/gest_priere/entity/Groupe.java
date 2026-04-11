@@ -26,12 +26,29 @@ public class Groupe {
 
     @Builder.Default
     @ManyToMany(mappedBy = "groupes")
-    private List<Etudiant> etudiants = new ArrayList<>();
+    private List<Etudiant> membres = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "id_etudiant")
+    private Etudiant createurGroupe;
 
 
+    public void ajouterMember(Etudiant etudiant){
+        if(this.membres == null){
+            this.membres = new ArrayList<>();
+        }
 
+        membres.add(etudiant);
+        etudiant.getGroupesCrees().add(this);
+    }
 
+  public void supprimerMembre(Etudiant etudiant){
+        if(etudiant.getGroupesCrees() == this){
+            etudiant.getGroupesCrees().remove(this);
+        }
 
+        membres.remove(etudiant);
+  }
 
 
 }

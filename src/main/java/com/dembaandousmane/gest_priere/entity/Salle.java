@@ -25,9 +25,6 @@ public class Salle {
     @Column(nullable = false)
     private String statut;
 
-    @OneToMany(mappedBy = "salle")
-    private List<Etudiant> etudiants = new ArrayList<>();
-
 
     @OneToMany(mappedBy = "salle")
     private  List<Reservation> reservations = new ArrayList<>();

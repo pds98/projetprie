@@ -28,4 +28,9 @@ public class Message {
     private Forum forum;
 
 
+    @ManyToOne
+    @JoinColumn(name = "id_etudiant")
+    private Etudiant etudiant;
+
+
 }

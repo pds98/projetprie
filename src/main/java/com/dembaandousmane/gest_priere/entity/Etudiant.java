@@ -38,23 +38,36 @@ public class Etudiant {
 
     @ManyToMany
     @JoinTable(
-            name = "detail_groupe",
+            name = "groupe_membre",
             joinColumns = @JoinColumn(name = "id_etudiant"),
             inverseJoinColumns = @JoinColumn(name = "id_groupe" )
     )
-    private List <Groupe> groupes;
+    private List <Groupe> groupesRejoins;
+
+
+    @OneToMany(mappedBy = "createurGroupe")
+    private List <Groupe> groupesCrees;
+
 
 
     @ManyToMany
-    @JoinTable(name = "detail_evenement",
+    @JoinTable(name = "participation_evenement",
             joinColumns = @JoinColumn(name = "id_etudiant"),
             inverseJoinColumns = @JoinColumn(name = "id_evenement"))
-    private List<Evenement> evenements;
+    private List<Evenement> evenementsParticipe;
 
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "id_salle")
-    private Salle salle;
+    @OneToMany(mappedBy = "createurEvenement")
+    private List <Evenement> evenementsCrees;
+
+
+
+    @OneToMany(mappedBy = "etudiant")
+    private List <Message> messages;
+
+
+
+
 
 
     @OneToMany(mappedBy = "etudiant")
@@ -64,46 +77,48 @@ public class Etudiant {
 
 
     public void rejoindreEvenement(Evenement evenement){
-        if (this.evenements == null){
-            this.evenements = new ArrayList<>();
+        if (this.evenementsParticipe == null){
+            this.evenementsParticipe = new ArrayList<>();
         }
 
-        evenements.add(evenement);
+        evenementsParticipe.add(evenement);
 
 
-        evenement.getEtudiants().add(this);
+        evenement.getParticipants().add(this);
     }
 
     public void quitterEvenement(Evenement evenement){
 
-        if(this.evenements != null){
-            evenements.remove(evenement);
+        if(this.evenementsParticipe != null){
+            evenementsParticipe.remove(evenement);
         }
-        if(evenement.getEtudiants().contains(this)){
-            evenement.getEtudiants().remove(this);
+        if(evenement.getParticipants()!= null){
+        evenement.getParticipants().remove(this);
         }
     }
 
     public void RejoindreGroupe(Groupe groupe){
-        if(this.groupes == null){
-            groupes = new ArrayList<>();
+        if(this.groupesRejoins == null){
+            groupesRejoins = new ArrayList<>();
         }
 
-        groupes.add(groupe);
+        groupesRejoins.add(groupe);
 
-        groupe.getEtudiants().add(this);
+        groupe.getMembres().add(this);
     }
 
     public void quitterGroupe(Groupe groupe){
 
-        if(this.groupes != null){
-            groupes.remove(groupe);
+        if(this.groupesRejoins != null){
+            groupesRejoins.remove(groupe);
         }
-        if(groupe.getEtudiants() == this){
-            groupe.setEtudiants(null);
+        if(groupe.getMembres() != null){
+            groupe.getMembres().remove(this);
         }
 
     }
+
+
 
 
   public void rejoindreForum(Forum forum){
@@ -147,6 +162,27 @@ public class Etudiant {
             reservation.setEtudiant(this);
         }
   }
+
+public void ajouterMessage(Message message){
+
+        if(this.messages == null){
+            this.messages = new ArrayList<>();
+        }
+
+        messages.add(message);
+
+        message.setEtudiant(this);
+}
+
+
+public void supprimerMessage(Message message){
+
+        if(message.getEtudiant() == this){
+            message.setEtudiant(null);
+        }
+
+        messages.remove(message);
+}
 
 
 }

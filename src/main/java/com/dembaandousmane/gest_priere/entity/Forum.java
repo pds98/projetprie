@@ -35,8 +35,13 @@ public class Forum {
     private Etudiant etudiant;
 
 
-    public void addMessage(Message message){
+    public void ajouterMessage(Message message){
+
+        if(this.messages == null){
+            this.messages = new ArrayList<>();
+        }
         messages.add(message);
+        message.setForum(this);
     }
 
 
