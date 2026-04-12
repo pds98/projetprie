@@ -37,7 +37,7 @@ public class Evenement {
 
 
     @Builder.Default
-    @ManyToMany(mappedBy = "evenements")
+    @ManyToMany(mappedBy = "evenementsParticipe")
     private List<Etudiant> participants = new ArrayList<>();
 
 

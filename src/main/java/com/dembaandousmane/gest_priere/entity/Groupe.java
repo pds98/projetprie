@@ -25,7 +25,7 @@ public class Groupe {
     private String description;
 
     @Builder.Default
-    @ManyToMany(mappedBy = "groupes")
+    @ManyToMany(mappedBy = "groupesRejoins")
     private List<Etudiant> membres = new ArrayList<>();
 
     @ManyToOne
