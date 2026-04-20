@@ -39,7 +39,7 @@ public class GroupeService {
                 .createurGroupe(e).build();
 
 
-        g.ajouterMember(e);
+        g.ajouterMembre(e);
 
         Groupe saved = groupeRepository.save(g);
 

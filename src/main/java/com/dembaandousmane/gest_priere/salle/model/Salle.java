@@ -36,6 +36,7 @@ public class Salle {
     private Boolean estReserver = false;
 
     @JsonIgnore
+    @Builder.Default
     @OneToMany(mappedBy = "salle")
     private List<Reservation> reservations = new ArrayList<>();
 

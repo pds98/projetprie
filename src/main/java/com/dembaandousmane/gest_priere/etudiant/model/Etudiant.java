@@ -65,6 +65,7 @@ public class Etudiant {
     private List<Groupe> groupesCrees;
 
     @JsonIgnore
+    @Builder.Default
     @ManyToMany
     @JoinTable(name = "participation_evenement",
             joinColumns = @JoinColumn(name = "id_etudiant"),
@@ -72,10 +73,12 @@ public class Etudiant {
     private List<Evenement> evenementsParticipe = new ArrayList<>();
 
     @JsonIgnore
+    @Builder.Default
     @OneToMany(mappedBy = "createurEvenement")
     private List<Evenement> evenementsCrees = new ArrayList<>();
 
     @JsonIgnore
+    @Builder.Default
     @OneToMany(mappedBy = "etudiant")
     private List<Message> messages = new ArrayList<>();
 
