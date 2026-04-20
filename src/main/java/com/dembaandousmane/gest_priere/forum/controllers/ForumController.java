@@ -1,5 +1,7 @@
 package com.dembaandousmane.gest_priere.forum.controllers;
 
+import com.dembaandousmane.gest_priere.etudiant.model.Etudiant;
+import com.dembaandousmane.gest_priere.etudiant.repository.EtudiantRepository;
 import com.dembaandousmane.gest_priere.forum.model.Forum;
 import com.dembaandousmane.gest_priere.forum.repository.ForumRepository;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -14,9 +17,11 @@ import java.util.Optional;
 public class ForumController {
 
     private final ForumRepository forumRepository;
+    private final EtudiantRepository etudiantRepository;
 
-    public ForumController(ForumRepository forumRepository) {
+    public ForumController(ForumRepository forumRepository, EtudiantRepository etudiantRepository) {
         this.forumRepository = forumRepository;
+        this.etudiantRepository = etudiantRepository;
     }
 
     @GetMapping
@@ -25,9 +30,27 @@ public class ForumController {
     }
 
     @PostMapping
-    public Forum creer(@RequestBody Forum forum) {
-        if (forum.getDateCreation() == null) forum.setDateCreation(LocalDateTime.now());
-        return forumRepository.save(forum);
+    public ResponseEntity<?> creer(@RequestBody Map<String, Object> body) {
+        String sujet = (String) body.get("sujet");
+        if (sujet == null || sujet.isBlank()) {
+            return ResponseEntity.badRequest().body(java.util.Map.of("message", "Le sujet est obligatoire."));
+        }
+
+        Long idEtudiant = null;
+        Object raw = body.get("idEtudiant");
+        if (raw instanceof Number) idEtudiant = ((Number) raw).longValue();
+
+        Etudiant etudiant = (idEtudiant != null)
+                ? etudiantRepository.findById(idEtudiant).orElse(null)
+                : null;
+
+        Forum forum = Forum.builder()
+                .sujet(sujet)
+                .dateCreation(LocalDateTime.now())
+                .etudiant(etudiant)
+                .build();
+
+        return ResponseEntity.ok(forumRepository.save(forum));
     }
 
     @PutMapping("/{id}")

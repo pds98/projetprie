@@ -14,9 +14,11 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { messageAPI } from '../../api/apiService';
 import colors from '../../theme/colors';
+import { useUser } from '../../context/UserContext';
 
 export default function MessagesScreen({ route, navigation }) {
   const { forum } = route.params;
+  const { currentUser } = useUser() || {};
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newMessage, setNewMessage] = useState('');
@@ -47,9 +49,9 @@ export default function MessagesScreen({ route, navigation }) {
     setSending(true);
     try {
       const msg = {
-        contenu: newMessage.trim(),
-        idForum: forum.idForum,
-        dateEnvoi: new Date().toISOString(),
+        contenu:    newMessage.trim(),
+        idForum:    forum.id ?? forum.idForum,
+        idEtudiant: currentUser?.id || null,
       };
       const res = await messageAPI.create(msg);
       setMessages((prev) => [...prev, res.data]);

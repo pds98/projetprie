@@ -31,11 +31,35 @@ public class EvenementController {
     }
 
     @PostMapping
-    public Evenement creer(@RequestBody Evenement evenement) {
-        if (evenement.getDateCreation() == null) evenement.setDateCreation(LocalDateTime.now());
-        evenement.setEstActif(true);
-        if (evenement.getStatut() == null) evenement.setStatut("actif");
-        return evenementRepository.save(evenement);
+    public ResponseEntity<?> creer(@RequestBody Map<String, Object> body) {
+        String nom         = (String) body.get("nom");
+        String description = body.get("description") != null ? (String) body.get("description") : "";
+        String lieu        = (String) body.get("lieu");
+        String statut      = body.get("statut") != null ? (String) body.get("statut") : "actif";
+
+        if (nom == null || lieu == null) {
+            return ResponseEntity.badRequest().body(java.util.Map.of("message", "nom et lieu sont obligatoires."));
+        }
+
+        Long idCreateur = null;
+        Object raw = body.get("idCreateurEvenement");
+        if (raw instanceof Number) idCreateur = ((Number) raw).longValue();
+
+        Etudiant createur = (idCreateur != null)
+                ? etudiantRepository.findById(idCreateur).orElse(null)
+                : null;
+
+        Evenement evenement = Evenement.builder()
+                .nom(nom)
+                .description(description)
+                .lieu(lieu)
+                .dateCreation(LocalDateTime.now())
+                .estActif(true)
+                .statut(statut)
+                .createurEvenement(createur)
+                .build();
+
+        return ResponseEntity.ok(evenementRepository.save(evenement));
     }
 
     @PutMapping("/{id}")

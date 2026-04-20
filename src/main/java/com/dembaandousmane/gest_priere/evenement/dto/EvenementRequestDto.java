@@ -14,7 +14,7 @@ public class EvenementRequestDto {
     private String description;
     private String lieu ;
     private LocalDateTime dateCreation ;
-    private  boolean estActif;
+    private Boolean estActif;
     private Long etudiantId;
 
     public EvenementRequestDto(Evenement evenement, Long etudiantId){
@@ -22,7 +22,7 @@ public class EvenementRequestDto {
         this.description = evenement.getDescription();
         this.lieu = evenement.getLieu();
         this.dateCreation = evenement.getDateCreation();
-        this.estActif = evenement.isEstActif();
+        this.estActif = evenement.getEstActif();
         this.etudiantId = etudiantId;
     }
 }

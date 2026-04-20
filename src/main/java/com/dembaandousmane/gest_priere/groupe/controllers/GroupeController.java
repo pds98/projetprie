@@ -7,7 +7,7 @@ import com.dembaandousmane.gest_priere.groupe.repository.GroupeRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -43,12 +43,16 @@ public class GroupeController {
                 .createurGroupe(createur)
                 .build();
 
+        Groupe saved = groupeRepository.save(g);
+
+        // Ajouter le créateur comme membre via le côté propriétaire (Etudiant)
         if (createur != null) {
-            if (g.getMembres() == null) g.setMembres(new ArrayList<>());
-            g.getMembres().add(createur);
+            if (createur.getGroupesRejoins() == null) createur.setGroupesRejoins(new java.util.ArrayList<>());
+            createur.getGroupesRejoins().add(saved);
+            etudiantRepository.save(createur);
         }
 
-        return groupeRepository.save(g);
+        return saved;
     }
 
     @DeleteMapping("/{id}")
@@ -56,32 +60,35 @@ public class GroupeController {
         groupeRepository.deleteById(id);
     }
 
+    // Côté propriétaire = Etudiant.groupesRejoins → on modifie l'étudiant, pas le groupe
+    @Transactional
     @PostMapping("/{id}/rejoindre")
     public ResponseEntity<Void> rejoindre(@PathVariable Long id, @RequestBody Map<String, Long> body) {
-        Long idEtudiant = body.get("idEtudiant");
-        Groupe groupe   = groupeRepository.findById(id).orElse(null);
+        Long idEtudiant   = body.get("idEtudiant");
+        Groupe   groupe   = groupeRepository.findById(id).orElse(null);
         Etudiant etudiant = (idEtudiant != null) ? etudiantRepository.findById(idEtudiant).orElse(null) : null;
         if (groupe == null || etudiant == null) return ResponseEntity.notFound().build();
 
-        if (groupe.getMembres() == null) groupe.setMembres(new ArrayList<>());
+        if (etudiant.getGroupesRejoins() == null) etudiant.setGroupesRejoins(new java.util.ArrayList<>());
 
-        boolean dejaInscrit = groupe.getMembres().stream().anyMatch(e -> e.getId().equals(idEtudiant));
+        boolean dejaInscrit = etudiant.getGroupesRejoins().stream().anyMatch(g -> g.getId().equals(id));
         if (!dejaInscrit) {
-            groupe.getMembres().add(etudiant);
-            groupeRepository.save(groupe);
+            etudiant.getGroupesRejoins().add(groupe);
+            etudiantRepository.save(etudiant);
         }
         return ResponseEntity.ok().build();
     }
 
+    @Transactional
     @DeleteMapping("/{id}/quitter/{idEtudiant}")
     public ResponseEntity<Void> quitter(@PathVariable Long id, @PathVariable Long idEtudiant) {
-        Groupe groupe     = groupeRepository.findById(id).orElse(null);
+        Groupe   groupe   = groupeRepository.findById(id).orElse(null);
         Etudiant etudiant = etudiantRepository.findById(idEtudiant).orElse(null);
         if (groupe == null || etudiant == null) return ResponseEntity.notFound().build();
 
-        if (groupe.getMembres() != null) {
-            groupe.getMembres().removeIf(e -> e.getId().equals(idEtudiant));
-            groupeRepository.save(groupe);
+        if (etudiant.getGroupesRejoins() != null) {
+            etudiant.getGroupesRejoins().removeIf(g -> g.getId().equals(id));
+            etudiantRepository.save(etudiant);
         }
         return ResponseEntity.ok().build();
     }

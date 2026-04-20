@@ -35,7 +35,7 @@ public class EvenementService {
         Evenement evenement1 = Evenement.builder().nom(evenement.getNom())
                 .dateCreation(evenement.getDateCreation()).description(evenement.getDescription())
                 .lieu(evenement.getLieu())
-                .estActif(evenement.isEstActif()).build();
+                .estActif(evenement.getEstActif()).build();
 
         etudiant.rejoindreEvenement(evenement1);
 
