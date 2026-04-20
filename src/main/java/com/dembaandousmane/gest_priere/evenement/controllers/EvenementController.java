@@ -4,11 +4,11 @@ import com.dembaandousmane.gest_priere.etudiant.model.Etudiant;
 import com.dembaandousmane.gest_priere.etudiant.repository.EtudiantRepository;
 import com.dembaandousmane.gest_priere.evenement.model.Evenement;
 import com.dembaandousmane.gest_priere.evenement.repository.EvenementRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -55,16 +55,17 @@ public class EvenementController {
         evenementRepository.deleteById(id);
     }
 
+    // POST /api/evenements/{id}/participer  — corps : { "idEtudiant": 1 }
+    @Transactional
     @PostMapping("/{id}/participer")
     public ResponseEntity<Void> participer(@PathVariable Long id, @RequestBody Map<String, Long> body) {
         Long idEtudiant = body.get("idEtudiant");
         Evenement evenement = evenementRepository.findById(id).orElse(null);
-        Etudiant etudiant   = (idEtudiant != null) ? etudiantRepository.findById(idEtudiant).orElse(null) : null;
+        Etudiant  etudiant  = (idEtudiant != null) ? etudiantRepository.findById(idEtudiant).orElse(null) : null;
         if (evenement == null || etudiant == null) return ResponseEntity.notFound().build();
 
-        if (etudiant.getEvenementsParticipe() == null) etudiant.setEvenementsParticipe(new ArrayList<>());
-
-        boolean dejaInscrit = etudiant.getEvenementsParticipe().stream().anyMatch(e -> e.getId().equals(id));
+        boolean dejaInscrit = etudiant.getEvenementsParticipe().stream()
+                .anyMatch(e -> e.getId().equals(id));
         if (!dejaInscrit) {
             etudiant.getEvenementsParticipe().add(evenement);
             etudiantRepository.save(etudiant);
@@ -72,16 +73,16 @@ public class EvenementController {
         return ResponseEntity.ok().build();
     }
 
+    // DELETE /api/evenements/{id}/quitter/{idEtudiant}
+    @Transactional
     @DeleteMapping("/{id}/quitter/{idEtudiant}")
     public ResponseEntity<Void> quitter(@PathVariable Long id, @PathVariable Long idEtudiant) {
         Evenement evenement = evenementRepository.findById(id).orElse(null);
-        Etudiant etudiant   = etudiantRepository.findById(idEtudiant).orElse(null);
+        Etudiant  etudiant  = etudiantRepository.findById(idEtudiant).orElse(null);
         if (evenement == null || etudiant == null) return ResponseEntity.notFound().build();
 
-        if (etudiant.getEvenementsParticipe() != null) {
-            etudiant.getEvenementsParticipe().removeIf(e -> e.getId().equals(id));
-            etudiantRepository.save(etudiant);
-        }
+        etudiant.getEvenementsParticipe().removeIf(e -> e.getId().equals(id));
+        etudiantRepository.save(etudiant);
         return ResponseEntity.ok().build();
     }
 }
