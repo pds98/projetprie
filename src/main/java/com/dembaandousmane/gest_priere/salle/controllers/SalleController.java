@@ -1,7 +1,8 @@
 package com.dembaandousmane.gest_priere.salle.controllers;
 
 import com.dembaandousmane.gest_priere.salle.model.Salle;
-import com.dembaandousmane.gest_priere.salle.repository.SalleRepository;
+import com.dembaandousmane.gest_priere.salle.service.SalleService;
+import jakarta.transaction.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

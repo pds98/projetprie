@@ -3,8 +3,10 @@ package com.dembaandousmane.gest_priere.reservation.service;
 
 import com.dembaandousmane.gest_priere.etudiant.model.Etudiant;
 import com.dembaandousmane.gest_priere.etudiant.service.EtudiantService;
+import com.dembaandousmane.gest_priere.evenement.model.Evenement;
 import com.dembaandousmane.gest_priere.priere.model.Priere;
 import com.dembaandousmane.gest_priere.priere.service.PriereService;
+import com.dembaandousmane.gest_priere.reservation.controllers.ReservationController;
 import com.dembaandousmane.gest_priere.reservation.dto.ReservationResponseDto;
 import com.dembaandousmane.gest_priere.reservation.model.Reservation;
 import com.dembaandousmane.gest_priere.reservation.repository.ReservationRepository;
@@ -13,6 +15,8 @@ import com.dembaandousmane.gest_priere.salle.service.SalleService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Service
 public class ReservationService {
@@ -89,6 +93,10 @@ public class ReservationService {
 
 
 
+    }
+
+    public List<Reservation> avoirToutLesReservation(){
+        return reservationRepository.findByEstActif(true);
     }
 
 }

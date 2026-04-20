@@ -110,3 +110,10 @@ public class EvenementController {
         return ResponseEntity.ok().build();
     }
 }
+
+@PostMapping("quitter/")
+public void quitterEvenement(@RequestParam Long etudiantId, @RequestParam Long evenementId){
+
+    evenementService.quitterEvenement(evenementId, etudiantId);
+    }
+}
