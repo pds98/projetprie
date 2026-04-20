@@ -6,7 +6,10 @@ import com.dembaandousmane.gest_priere.etudiant.service.EtudiantService;
 import com.dembaandousmane.gest_priere.evenement.dto.EvenementResponseDto;
 import com.dembaandousmane.gest_priere.evenement.model.Evenement;
 import com.dembaandousmane.gest_priere.evenement.repository.EvenementRepository;
+import com.dembaandousmane.gest_priere.salle.model.Salle;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class EvenementService {
@@ -37,7 +40,7 @@ public class EvenementService {
                 .lieu(evenement.getLieu())
                 .estActif(evenement.isEstActif()).build();
 
-        etudiant.rejoindreEvenement(evenement1);
+        etudiant.creerEvenement(evenement1);
 
          Evenement ev = evenementRepository.save(evenement1);
 
@@ -52,7 +55,46 @@ public class EvenementService {
     public void modifierEvenement(){}
 
 
-    public void supprimerEvenement(){
+    public void annulerEvenement(Long evenementId){
 
+        if(evenementId == 0){
+            throw new RuntimeException("l'evenement id est 0");
+        }
+
+        Evenement evenement = evenementRepository.findById(evenementId).orElseThrow(() -> new RuntimeException("l'evenement n'a pas été trouvé"));
+
+        evenement.setEstActif(false);
+
+    }
+
+    public List<Evenement> avoirToutLesEvenement(){
+
+      return  evenementRepository.findByEstActif(true);
+    }
+
+
+    public void participerEvenement(Long evenementId, Long etudiantId){
+
+        if(evenementId == 0 ||  etudiantId == 0){
+            throw new RuntimeException("l'evenement id est 0 ou alors etudiantId 0 ");
+        }
+
+        Evenement evenement = evenementRepository.findById(evenementId).orElseThrow(() -> new RuntimeException("l'evenement n'existe pas"));
+        Etudiant etudiant = etudiantService.trouverEtudiantParId(etudiantId);
+
+        etudiant.participerEvenement(evenement);
+
+    }
+
+    public void quitterEvenement(Long evenementId, Long etudiantId){
+
+        if(evenementId == 0 ||  etudiantId == 0){
+            throw new RuntimeException("l'evenement id est 0 ou alors etudiantId 0 ");
+        }
+
+        Evenement evenement = evenementRepository.findById(evenementId).orElseThrow(() -> new RuntimeException("l'evenement n'existe pas"));
+        Etudiant etudiant = etudiantService.trouverEtudiantParId(etudiantId);
+
+        etudiant.quitterEvenement(evenement);
     }
 }

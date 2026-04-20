@@ -80,29 +80,33 @@ public class Etudiant {
 
 
 
-
-    public void rejoindreEvenement(Evenement evenement){
-        if (this.evenementsParticipe == null){
-            this.evenementsParticipe = new ArrayList<>();
+    public void creerGroupe(Groupe groupe){
+        if(groupe == null) {
+            throw new RuntimeException("le groupe est null");
         }
 
-        evenementsParticipe.add(evenement);
-
-
-        evenement.getParticipants().add(this);
+        groupe.setCreateurGroupe(this);
+        groupesCrees.add(groupe);
+        this.rejoindreGroupe(groupe);
     }
 
-    public void quitterEvenement(Evenement evenement){
+    public void retirerGroupe(Groupe groupe){
 
-        if(this.evenementsParticipe != null){
-            evenementsParticipe.remove(evenement);
+        if(groupe == null){
+            throw new RuntimeException("le groupe est null");
         }
-        if(evenement.getParticipants()!= null){
-        evenement.getParticipants().remove(this);
+
+        if(groupe.getCreateurGroupe() == this){
+            groupe.setCreateurGroupe(null);
         }
+
+        groupesCrees.remove(groupe);
+        this.quitterGroupe(groupe);
     }
 
-    public void RejoindreGroupe(Groupe groupe){
+
+
+    public void rejoindreGroupe(Groupe groupe){
         if(this.groupesRejoins == null){
             groupesRejoins = new ArrayList<>();
         }
@@ -123,10 +127,55 @@ public class Etudiant {
 
     }
 
+    public void creerEvenement(Evenement evenement){
+        if(evenement == null){
+            throw new RuntimeException("l'evenement est null");
+        }
+
+        evenement.setCreateurEvenement(this);
+        evenementsCrees.add(evenement);
+
+        this.participerEvenement(evenement);
+    }
+
+    public void retireEvenement(Evenement evenement){
+
+        if(evenement == null){
+            throw new RuntimeException("l'evenement est null");
+        }
+
+        if(evenement.getCreateurEvenement() == this){
+            evenement.setCreateurEvenement(null);
+        }
+        evenementsCrees.remove(evenement);
+        this.quitterEvenement(evenement);
+    }
+
+    public void participerEvenement(Evenement evenement){
+        if (this.evenementsParticipe == null){
+            this.evenementsParticipe = new ArrayList<>();
+        }
+
+        evenementsParticipe.add(evenement);
+
+
+        evenement.getParticipants().add(this);
+    }
+
+    public void quitterEvenement(Evenement evenement){
+
+        if(this.evenementsParticipe != null){
+            evenementsParticipe.remove(evenement);
+        }
+        if(evenement.getParticipants()!= null){
+            evenement.getParticipants().remove(this);
+        }
+    }
 
 
 
-  public void rejoindreForum(Forum forum){
+
+  public void creerForum(Forum forum){
         if(this.forums == null ){
             this.forums = new ArrayList<>();
         }
@@ -136,7 +185,7 @@ public class Etudiant {
         forum.setEtudiant(this);
   }
 
-  public void quitterForum(Forum forum){
+  public void retirerForum(Forum forum){
         if(this.forums != null){
             forums.remove(forum);
         }
@@ -164,7 +213,7 @@ public class Etudiant {
         }
 
         if(reservation.getEtudiant()==this ){
-            reservation.setEtudiant(this);
+            reservation.setEtudiant(null);
         }
   }
 

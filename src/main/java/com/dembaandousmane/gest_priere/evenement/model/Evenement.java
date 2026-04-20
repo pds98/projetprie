@@ -48,25 +48,6 @@ public class Evenement {
 
 
 
-    public void ajouterParticipant(Etudiant etudiant){
-        if(this.participants == null){
-            this.participants = new ArrayList<>();
-        }
-
-        participants.add(etudiant);
-        etudiant.getEvenementsParticipe().add(this);
-    }
-
-
-    public void supprimerParticipant(Etudiant etudiant){
-        if(this.participants != null){
-            participants.remove(etudiant);
-        }
-
-        if(etudiant.getEvenementsParticipe()!= null){
-            etudiant.getEvenementsParticipe().remove(this);
-        }
-    }
 
 
 

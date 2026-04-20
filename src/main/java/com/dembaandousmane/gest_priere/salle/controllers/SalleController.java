@@ -1,8 +1,10 @@
 package com.dembaandousmane.gest_priere.salle.controllers;
 
 
+import com.dembaandousmane.gest_priere.salle.dto.SalleResponseDto;
 import com.dembaandousmane.gest_priere.salle.model.Salle;
-import com.dembaandousmane.gest_priere.salle.repository.SalleRepository;
+import com.dembaandousmane.gest_priere.salle.service.SalleService;
+import jakarta.transaction.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,39 +12,36 @@ import java.util.List;
 @RequestMapping("api/salles")
 @RestController
 public class SalleController {
-    private SalleRepository salleRepository;
+    private final  SalleService salleService;
 
-
-
-    public SalleController(SalleRepository salleRepository){
-        this.salleRepository = salleRepository;
+    public SalleController(SalleService salleService) {
+        this.salleService = salleService;
     }
-
-
 
 
     @PostMapping("salle")
-    public void ajouterSalle(@RequestBody Salle salle){
+    public SalleResponseDto creerSalle(@RequestBody Salle salle){
 
-        Salle s = Salle.builder().capacite(salle.getCapacite())
-                .statut(salle.getStatut())
-                .build();
+       return salleService.creerSalle(salle);
+    }
 
-
-
-        salleRepository.save(s);
-
+     @PutMapping
+    public void modifierSalleParCapacite(@RequestParam Long idSalle, @RequestParam int nouvelleCapacite){
+        salleService.modifierSalleParCapacite(idSalle, nouvelleCapacite);
     }
 
 
-    public void modifierSalle(){}
+    @DeleteMapping
+    @Transactional
+    public void supprimerSalle(@RequestParam Long idsalle){
+      salleService.supprimerSalle(idsalle);
+    }
 
+    @GetMapping
+    public List<Salle> avoirSalleLibre(){
 
-
-    public void supprimerSalle(){}
-
-
-    public List<Salle> avoirSalle(){return null;}
+        return salleService.avoirSalleLibre();
+    }
 }
 
 

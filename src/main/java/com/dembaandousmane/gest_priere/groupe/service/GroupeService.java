@@ -8,7 +8,10 @@ import com.dembaandousmane.gest_priere.groupe.controllers.GroupeController;
 import com.dembaandousmane.gest_priere.groupe.dto.GroupeDtoResponse;
 import com.dembaandousmane.gest_priere.groupe.model.Groupe;
 import com.dembaandousmane.gest_priere.groupe.repository.GroupeRepository;
+import com.dembaandousmane.gest_priere.reservation.model.Reservation;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class GroupeService {
@@ -39,7 +42,7 @@ public class GroupeService {
                 .createurGroupe(e).build();
 
 
-        g.ajouterMember(e);
+        e.creerGroupe(g);
 
         Groupe saved = groupeRepository.save(g);
 
@@ -53,7 +56,50 @@ public class GroupeService {
 
     }
 
-    public void supprimerGroupe(Groupe groupe){
+    public void supprimerGroupe(Long groupeId, Long etudiantId){
 
+        if(groupeId == 0 || etudiantId == 0){
+            throw new RuntimeException("l'id du groupe ou le etudiantId est null");
+        }
+
+        Groupe groupe = groupeRepository.findById(groupeId).orElseThrow(() ->  new RuntimeException("groupe n'existe pas"));
+        Etudiant etudiant = etudiantService.trouverEtudiantParId(etudiantId);
+
+
+        groupeRepository.delete(groupe);
+        etudiant.retirerGroupe(groupe);
+
+
+    }
+
+    public void rejoindreGroupe(Long groupeId, Long etudiantId){
+
+        if(groupeId == 0 || etudiantId == 0){
+            throw new RuntimeException("le groupe id , etudiant id");
+        }
+
+        Groupe groupe = groupeRepository.findById(groupeId).orElseThrow(() -> new RuntimeException("groupe existe pas"));
+        Etudiant etudiant = etudiantService.trouverEtudiantParId(etudiantId);
+
+        etudiant.rejoindreGroupe(groupe);
+
+
+    }
+
+    public void quitterGroupe(Long groupeId, Long etudiantId){
+
+
+        if(groupeId == 0 || etudiantId == 0){
+            throw new RuntimeException("le groupe id , etudiant id");
+        }
+
+        Groupe groupe = groupeRepository.findById(groupeId).orElseThrow(() -> new RuntimeException("groupe existe pas"));
+        Etudiant etudiant = etudiantService.trouverEtudiantParId(etudiantId);
+
+        etudiant.quitterGroupe(groupe);
+    }
+
+    public List<Groupe> avoirToutlesGroupe(){
+       return  groupeRepository.findAll();
     }
 }
