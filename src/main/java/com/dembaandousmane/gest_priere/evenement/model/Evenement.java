@@ -36,9 +36,10 @@ public class Evenement {
     @Column(nullable = false)
     private String lieu;
 
+    // Boolean (boxed) pour accepter null depuis le frontend sans planter Jackson
     @Column(nullable = false)
     @Builder.Default
-    private boolean estActif = true;
+    private Boolean estActif = true;
 
     @Column
     private String statut;

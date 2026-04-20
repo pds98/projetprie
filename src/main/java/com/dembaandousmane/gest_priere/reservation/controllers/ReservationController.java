@@ -52,8 +52,8 @@ public class ReservationController {
         Reservation r = Reservation.builder()
                 .debut(donnees.debut)
                 .fin(donnees.fin)
-                .motif(donnees.motif)
-                .nombrePersonnes(donnees.nombrePersonnes)
+                .motif(donnees.motif != null ? donnees.motif : "")
+                .nombrePersonnes(donnees.nombrePersonnes != null ? donnees.nombrePersonnes : 0)
                 .estActif(true)
                 .etudiant(etudiant)
                 .salle(salle)
@@ -92,7 +92,7 @@ public class ReservationController {
         public Long idPriere;
         public LocalDateTime debut;
         public LocalDateTime fin;
-        public int nombrePersonnes;
+        public Integer nombrePersonnes; // Integer boxed pour accepter null du frontend
         public String motif;
     }
 }

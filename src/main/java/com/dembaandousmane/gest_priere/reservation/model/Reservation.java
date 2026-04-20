@@ -20,14 +20,12 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-
     @ManyToOne
     @JoinColumn(name = "id_etudiant")
-    private Etudiant etudiant ;
+    private Etudiant etudiant;
 
     @ManyToOne
-    @JoinColumn(name="id_priere")
+    @JoinColumn(name = "id_priere")
     private Priere priere;
 
     @Column(nullable = false)
@@ -36,19 +34,21 @@ public class Reservation {
     @Column(nullable = false)
     private LocalDateTime fin;
 
+    // Integer (boxed) pour accepter null depuis le frontend sans planter Jackson
+    @Column(nullable = false)
+    @Builder.Default
+    private Integer nombrePersonnes = 0;
 
     @Column(nullable = false)
-    private int nombrePersonnes;
+    @Builder.Default
+    private String motif = "";
 
+    // Boolean (boxed) pour accepter null depuis le frontend sans planter Jackson
     @Column(nullable = false)
-    private String motif;
-
-    @Column(nullable = false)
-    private boolean estActif;
+    @Builder.Default
+    private Boolean estActif = true;
 
     @ManyToOne
     @JoinColumn(name = "id_salle")
-    private Salle salle ;
-
-
+    private Salle salle;
 }
