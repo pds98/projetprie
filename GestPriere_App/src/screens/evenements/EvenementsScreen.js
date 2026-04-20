@@ -19,10 +19,7 @@ const STATUT_COLORS = {
 const EMPTY_FORM = { nom: '', description: '', lieu: '' };
 
 // ─────────────────────────────────────────────────────────────────────────────
-// EventModal extrait EN DEHORS du composant principal.
-// Si on le laisse DEDANS, chaque keystroke provoque un re-render qui
-// recrée la référence du composant → React démonte/remonte le Modal
-// → le clavier se ferme à chaque lettre.
+//
 // ─────────────────────────────────────────────────────────────────────────────
 const EventModal = ({ visible, onClose, title, form, setForm, onSubmit, submitting, submitLabel }) => (
   <Modal visible={visible} animationType="slide" transparent onRequestClose={onClose}>
