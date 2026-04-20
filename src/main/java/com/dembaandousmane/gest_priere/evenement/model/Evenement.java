@@ -1,15 +1,18 @@
 package com.dembaandousmane.gest_priere.evenement.model;
 
 import com.dembaandousmane.gest_priere.etudiant.model.Etudiant;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Entity
-
 @Getter
 @Setter
 @Builder
@@ -34,43 +37,38 @@ public class Evenement {
     private String lieu;
 
     @Column(nullable = false)
-    private boolean estActif;
+    @Builder.Default
+    private boolean estActif = true;
 
+    @Column
+    private String statut;
 
+    @JsonIgnore
     @Builder.Default
     @ManyToMany(mappedBy = "evenementsParticipe")
     private List<Etudiant> participants = new ArrayList<>();
-
 
     @ManyToOne
     @JoinColumn(name = "id_etudiant")
     private Etudiant createurEvenement;
 
+    // Expose uniquement les IDs des participants (evite boucle infinie)
+    public List<Long> getParticipantIds() {
+        if (participants == null) return Collections.emptyList();
+        return participants.stream()
+                .map(Etudiant::getId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
 
-
-    public void ajouterParticipant(Etudiant etudiant){
-        if(this.participants == null){
-            this.participants = new ArrayList<>();
-        }
-
+    public void ajouterParticipant(Etudiant etudiant) {
+        if (this.participants == null) this.participants = new ArrayList<>();
         participants.add(etudiant);
         etudiant.getEvenementsParticipe().add(this);
     }
 
-
-    public void supprimerParticipant(Etudiant etudiant){
-        if(this.participants != null){
-            participants.remove(etudiant);
-        }
-
-        if(etudiant.getEvenementsParticipe()!= null){
-            etudiant.getEvenementsParticipe().remove(this);
-        }
+    public void supprimerParticipant(Etudiant etudiant) {
+        if (this.participants != null) participants.remove(etudiant);
+        if (etudiant.getEvenementsParticipe() != null) etudiant.getEvenementsParticipe().remove(this);
     }
-
-
-
-
-
-
 }

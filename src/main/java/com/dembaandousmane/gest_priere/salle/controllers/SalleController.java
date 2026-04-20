@@ -1,48 +1,38 @@
 package com.dembaandousmane.gest_priere.salle.controllers;
 
-
 import com.dembaandousmane.gest_priere.salle.model.Salle;
 import com.dembaandousmane.gest_priere.salle.repository.SalleRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("api/salles")
 @RestController
+@RequestMapping("/api/salles")
 public class SalleController {
-    private SalleRepository salleRepository;
 
+    private final SalleRepository salleRepository;
 
-
-    public SalleController(SalleRepository salleRepository){
+    public SalleController(SalleRepository salleRepository) {
         this.salleRepository = salleRepository;
     }
 
-
-
-
-    @PostMapping("salle")
-    public void ajouterSalle(@RequestBody Salle salle){
-
-        Salle s = Salle.builder().capacite(salle.getCapacite())
-                .statut(salle.getStatut())
-                .build();
-
-
-
-        salleRepository.save(s);
-
+    @GetMapping
+    public List<Salle> getTous() {
+        return salleRepository.findAll();
     }
 
+    @PostMapping
+    public Salle ajouter(@RequestBody Salle salle) {
+        Salle s = Salle.builder()
+                .capacite(salle.getCapacite())
+                .statut(salle.getStatut() != null ? salle.getStatut() : "libre")
+                .NumeroSalle(salle.getNumeroSalle())
+                .build();
+        return salleRepository.save(s);
+    }
 
-    public void modifierSalle(){}
-
-
-
-    public void supprimerSalle(){}
-
-
-    public List<Salle> avoirSalle(){return null;}
+    @DeleteMapping("/{id}")
+    public void supprimer(@PathVariable Long id) {
+        salleRepository.deleteById(id);
+    }
 }
-
-
