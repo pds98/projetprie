@@ -3,12 +3,14 @@ package com.dembaandousmane.gest_priere.evenement.service;
 
 import com.dembaandousmane.gest_priere.etudiant.model.Etudiant;
 import com.dembaandousmane.gest_priere.etudiant.service.EtudiantService;
+import com.dembaandousmane.gest_priere.evenement.dto.EvenementRequestDto;
 import com.dembaandousmane.gest_priere.evenement.dto.EvenementResponseDto;
 import com.dembaandousmane.gest_priere.evenement.model.Evenement;
 import com.dembaandousmane.gest_priere.evenement.repository.EvenementRepository;
 import com.dembaandousmane.gest_priere.salle.model.Salle;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -24,29 +26,31 @@ public class EvenementService {
 
     }
 
-    public EvenementResponseDto creeEvenement(Evenement evenement, Long etudiantId){
+    public EvenementResponseDto creeEvenement(EvenementRequestDto requestDto){
 
 
-        if(evenement.getCreateurEvenement() == null && evenement.getNom() == null){
+        if(requestDto.getEtudiantId() == null && requestDto.getNom() == null){
             throw new RuntimeException("Nom obligatoire");
         }
 
-        Etudiant etudiant = etudiantService.trouverEtudiantParId(etudiantId);
+        Etudiant etudiant = etudiantService.trouverEtudiantParId(requestDto.getEtudiantId());
 
 
 
-        Evenement evenement1 = Evenement.builder().nom(evenement.getNom())
-                .dateCreation(evenement.getDateCreation()).description(evenement.getDescription())
-                .lieu(evenement.getLieu())
-                .estActif(evenement.isEstActif()).build();
+        Evenement evenement = Evenement.builder().nom(requestDto.getNom())
+                .dateCreation(LocalDateTime.now()).description(requestDto.getDescription())
+                .lieu(requestDto.getLieu())
+                .estActif(true)
+                .build();
 
-        etudiant.creerEvenement(evenement1);
+        etudiant.creerEvenement(evenement);
 
-         Evenement ev = evenementRepository.save(evenement1);
+         Evenement saved = evenementRepository.save(evenement);
 
-         EvenementResponseDto responseDto = new EvenementResponseDto(evenement1, etudiantId);
-
-         return new EvenementResponseDto(ev, etudiantId);
+         return EvenementResponseDto.builder().nom(saved.getNom())
+                 .lieu(saved.getLieu())
+                 .description(saved.getDescription())
+                 .dateCreation(saved.getDateCreation()).build();
 
 
 

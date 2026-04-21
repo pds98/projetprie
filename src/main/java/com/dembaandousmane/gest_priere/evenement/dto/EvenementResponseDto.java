@@ -7,6 +7,9 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 
 public class EvenementResponseDto {
 
@@ -14,17 +17,9 @@ public class EvenementResponseDto {
     private String description;
     private String lieu ;
     private LocalDateTime dateCreation ;
-    private  boolean estActif;
     private Long etudiantId;
 
-    public EvenementResponseDto(Evenement evenement, Long etudiantId){
-        this.nom = evenement.getNom();
-        this.description = evenement.getDescription();
-        this.lieu = evenement.getLieu();
-        this.dateCreation = evenement.getDateCreation();
-        this.estActif = evenement.isEstActif();
-        this.etudiantId = etudiantId;
-    }
+
 
 
 }

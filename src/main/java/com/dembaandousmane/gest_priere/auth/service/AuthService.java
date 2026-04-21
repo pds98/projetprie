@@ -2,6 +2,7 @@ package com.dembaandousmane.gest_priere.auth.service;
 
 
 import com.dembaandousmane.gest_priere.auth.dto.InscriptionResponseDto;
+import com.dembaandousmane.gest_priere.auth.dto.LoginRequestDto;
 import com.dembaandousmane.gest_priere.auth.dto.LoginResponseDto;
 import com.dembaandousmane.gest_priere.etudiant.model.Etudiant;
 import com.dembaandousmane.gest_priere.etudiant.service.EtudiantService;
@@ -24,10 +25,10 @@ public class AuthService {
        return etudiantService.creerEtudiant(etudiant);
     }
 
-    public LoginResponseDto connexion(Etudiant etudiant){
+    public LoginResponseDto connexion(LoginRequestDto requestDto){
 
-        return  etudiantService.trouverEtudiantParEmail(etudiant);
+       // return  etudiantService.trouverEtudiantParEmail(requestDto.getEmail());
 
-
+      return null ;
     }
 }

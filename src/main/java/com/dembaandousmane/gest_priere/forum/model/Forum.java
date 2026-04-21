@@ -46,6 +46,18 @@ public class Forum {
         message.setForum(this);
     }
 
+    public void supprimerMessage(Message message){
+        if(message == null){
+            throw new RuntimeException("le message est null");
+        }
+
+        if(message.getForum() == this){
+            message.setForum(null);
+        }
+
+        messages.remove(message);
+    }
+
 
 
 

@@ -1,6 +1,7 @@
 package com.dembaandousmane.gest_priere.evenement.controllers;
 
 
+import com.dembaandousmane.gest_priere.evenement.dto.EvenementRequestDto;
 import com.dembaandousmane.gest_priere.evenement.dto.EvenementResponseDto;
 import com.dembaandousmane.gest_priere.evenement.model.Evenement;
 import com.dembaandousmane.gest_priere.evenement.service.EvenementService;
@@ -21,9 +22,9 @@ public class EvenementController {
 
 
     @PostMapping
-    public EvenementResponseDto creerEvenement(@RequestBody Evenement evenement, @RequestParam Long etudiantId){
+    public EvenementResponseDto creerEvenement(@RequestBody EvenementRequestDto requestDto){
 
-        return evenementService.creeEvenement(evenement, etudiantId);
+        return evenementService.creeEvenement(requestDto);
     }
 
     @DeleteMapping
