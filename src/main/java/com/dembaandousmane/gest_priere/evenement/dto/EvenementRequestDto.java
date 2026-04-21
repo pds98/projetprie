@@ -15,7 +15,6 @@ public class EvenementRequestDto {
     private String nom ;
     private String description;
     private String lieu ;
-    private Long etudiantId;
 
 
 }
