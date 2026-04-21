@@ -5,6 +5,7 @@ import com.dembaandousmane.gest_priere.priere.repository.PriereRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,5 +23,9 @@ public class PriereService {
         Optional<Priere> p = priereRepository.findById(id);
          return p.orElseThrow(() -> new RuntimeException("la priere n'existe pas"));
 
+    }
+
+    public List<Priere> avoirTouteLesPriere(){
+        return priereRepository.findAll();
     }
 }
