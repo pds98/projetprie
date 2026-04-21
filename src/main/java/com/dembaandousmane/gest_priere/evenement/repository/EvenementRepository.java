@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface EvenementRepository extends JpaRepository<Evenement, Long> {
 
+  public List<Evenement> findByEstActif(boolean estActif);
+
 }

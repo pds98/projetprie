@@ -1,5 +1,7 @@
 package com.dembaandousmane.gest_priere.salle.controllers;
 
+
+import com.dembaandousmane.gest_priere.salle.dto.SalleResponseDto;
 import com.dembaandousmane.gest_priere.salle.model.Salle;
 import com.dembaandousmane.gest_priere.salle.service.SalleService;
 import jakarta.transaction.Transactional;
@@ -7,33 +9,39 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequestMapping("api/salles")
 @RestController
-@RequestMapping("/api/salles")
 public class SalleController {
+    private final  SalleService salleService;
 
-    private final SalleRepository salleRepository;
+    public SalleController(SalleService salleService) {
+        this.salleService = salleService;
+    }
 
-    public SalleController(SalleRepository salleRepository) {
-        this.salleRepository = salleRepository;
+
+    @PostMapping("salle")
+    public SalleResponseDto creerSalle(@RequestBody Salle salle){
+
+       return salleService.creerSalle(salle);
+    }
+
+     @PutMapping
+    public void modifierSalleParCapacite(@RequestParam Long idSalle, @RequestParam int nouvelleCapacite){
+        salleService.modifierSalleParCapacite(idSalle, nouvelleCapacite);
+    }
+
+
+    @DeleteMapping
+    @Transactional
+    public void supprimerSalle(@RequestParam Long idsalle){
+      salleService.supprimerSalle(idsalle);
     }
 
     @GetMapping
-    public List<Salle> getTous() {
-        return salleRepository.findAll();
-    }
+    public List<Salle> avoirSalleLibre(){
 
-    @PostMapping
-    public Salle ajouter(@RequestBody Salle salle) {
-        Salle s = Salle.builder()
-                .capacite(salle.getCapacite())
-                .statut(salle.getStatut() != null ? salle.getStatut() : "libre")
-                .NumeroSalle(salle.getNumeroSalle())
-                .build();
-        return salleRepository.save(s);
-    }
-
-    @DeleteMapping("/{id}")
-    public void supprimer(@PathVariable Long id) {
-        salleRepository.deleteById(id);
+        return salleService.avoirSalleLibre();
     }
 }
+
+

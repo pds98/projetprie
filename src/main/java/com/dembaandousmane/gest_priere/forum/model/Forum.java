@@ -2,7 +2,6 @@ package com.dembaandousmane.gest_priere.forum.model;
 
 import com.dembaandousmane.gest_priere.etudiant.model.Etudiant;
 import com.dembaandousmane.gest_priere.message.model.Message;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,7 +27,6 @@ public class Forum {
     @Column(nullable = false)
     private LocalDateTime dateCreation;
 
-    @JsonIgnore
     @Builder.Default
     @OneToMany(mappedBy = "forum")
     private List<Message> messages = new ArrayList<>();

@@ -14,7 +14,7 @@ public class EvenementResponseDto {
     private String description;
     private String lieu ;
     private LocalDateTime dateCreation ;
-    private Boolean estActif;
+    private  boolean estActif;
     private Long etudiantId;
 
     public EvenementResponseDto(Evenement evenement, Long etudiantId){
@@ -22,7 +22,7 @@ public class EvenementResponseDto {
         this.description = evenement.getDescription();
         this.lieu = evenement.getLieu();
         this.dateCreation = evenement.getDateCreation();
-        this.estActif = evenement.getEstActif();
+        this.estActif = evenement.isEstActif();
         this.etudiantId = etudiantId;
     }
 

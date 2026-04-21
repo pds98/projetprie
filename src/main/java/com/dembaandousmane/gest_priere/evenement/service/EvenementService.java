@@ -38,7 +38,7 @@ public class EvenementService {
         Evenement evenement1 = Evenement.builder().nom(evenement.getNom())
                 .dateCreation(evenement.getDateCreation()).description(evenement.getDescription())
                 .lieu(evenement.getLieu())
-                .estActif(evenement.getEstActif()).build();
+                .estActif(evenement.isEstActif()).build();
 
         etudiant.creerEvenement(evenement1);
 

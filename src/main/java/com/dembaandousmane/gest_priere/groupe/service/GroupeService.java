@@ -42,7 +42,7 @@ public class GroupeService {
                 .createurGroupe(e).build();
 
 
-        g.ajouterMembre(e);
+        e.creerGroupe(g);
 
         Groupe saved = groupeRepository.save(g);
 
