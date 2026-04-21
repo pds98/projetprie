@@ -50,7 +50,8 @@ public class EvenementService {
          return EvenementResponseDto.builder().nom(saved.getNom())
                  .lieu(saved.getLieu())
                  .description(saved.getDescription())
-                 .dateCreation(saved.getDateCreation()).build();
+                 .dateCreation(saved.getDateCreation())
+                 .etudiantId(saved.getCreateurEvenement().getId()).build();
 
 
 
