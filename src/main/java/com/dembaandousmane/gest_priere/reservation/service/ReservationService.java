@@ -41,43 +41,49 @@ public class ReservationService {
             throw new RuntimeException("le champ motif est obligatoire");
         }
 
-        if(reservationRequestDto.getIdEtudiant() == null || reservationRequestDto.getIdPriere() == null || reservationRequestDto.getIdSalle() == null){
+        if(reservationRequestDto.getIdEtudiant() == null || reservationRequestDto.getIdSalle() == null){
             throw new RuntimeException("les champ id doivent etre obligatoire");
         }
 
-        if(reservationRequestDto.getDateDebut() == null || reservationRequestDto.getDateFin() ==  null){
+        if(reservationRequestDto.getDebut() == null || reservationRequestDto.getFin() == null){
             throw new RuntimeException("les champs debut et fin doivent etre obligatoire");
         }
 
         Etudiant e = etudiantService.trouverEtudiantParId(reservationRequestDto.getIdEtudiant());
         Salle s = salleService.trouverSalleParId(reservationRequestDto.getIdSalle());
-        Priere p = priereService.trouverPriereParId(reservationRequestDto.getIdSalle());
-
 
         if(!s.estLibre()){
-            throw new RuntimeException("la classe est deja reservé.........");
+            throw new RuntimeException("la salle est deja reservée");
         }
 
-        Reservation r = Reservation.builder().debut(reservationRequestDto.getDateDebut())
-                .fin(reservationRequestDto.getDateFin())
-                .motif(reservationRequestDto.getMotif())
+        int nbPersonnes = reservationRequestDto.getNombrePersonnes() != null
+                ? reservationRequestDto.getNombrePersonnes() : 1;
+
+        Reservation r = Reservation.builder()
+                .debut(reservationRequestDto.getDebut())
+                .fin(reservationRequestDto.getFin())
+                .motif(reservationRequestDto.getMotif() != null ? reservationRequestDto.getMotif() : "")
+                .nombrePersonnes(nbPersonnes)
                 .estActif(true)
                 .build();
 
-
         e.ajouterReservation(r);
         s.ajouterReservation(r);
-        p.ajouterReservation(r);
+
+        if(reservationRequestDto.getIdPriere() != null){
+            Priere p = priereService.trouverPriereParId(reservationRequestDto.getIdPriere());
+            p.ajouterReservation(r);
+        }
 
 
         Reservation saved  = reservationRepository.save(r);
 
        return  ReservationResponseDto.builder().id(saved.getId())
-               .idEtudiant(saved.getId()).nomEtudiant(saved.getEtudiant().getNom())
+               .idEtudiant(saved.getEtudiant().getId()).nomEtudiant(saved.getEtudiant().getNom())
                .idSalle(saved.getSalle().getIdSalle())
                .numeroSalle(saved.getSalle().getNumeroSalle())
-               .nomPriere(saved.getPriere().getNom())
-               .idPriere(saved.getPriere().getId())
+               .nomPriere(saved.getPriere() != null ? saved.getPriere().getNom() : null)
+               .idPriere(saved.getPriere() != null ? saved.getPriere().getId() : null)
                .motif(saved.getMotif())
                .debut(saved.getDebut())
                .fin(saved.getFin())
@@ -96,6 +102,14 @@ public class ReservationService {
 
 
 
+    }
+
+    @Transactional
+    public void modifierReservation(Long id, ReservationRequestDto dto){
+        Reservation r = reservationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Réservation non trouvée"));
+        if(dto.getMotif() != null) r.setMotif(dto.getMotif());
+        if(dto.getNombrePersonnes() != null) r.setNombrePersonnes(dto.getNombrePersonnes());
     }
 
     public List<Reservation> avoirToutLesReservation(){
