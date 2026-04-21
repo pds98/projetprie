@@ -35,6 +35,7 @@ public class EtudiantService {
                 .nom(etudiant.getNom())
                 .telephone(etudiant.getTelephone())
                 .email(etudiant.getEmail())
+                .motDePasse(etudiant.getMotDePasse())
                 .build();
 
         Etudiant saved =  etudiantRepository.save(e);
@@ -50,9 +51,15 @@ public class EtudiantService {
 
     public LoginResponseDto trouverEtudiantParEmail(Etudiant etudiant){
 
-        Optional<Etudiant> etudiant1 =  etudiantRepository.findByEmail(etudiant.getEmail());
-        Etudiant e = etudiant1.orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
-        return new LoginResponseDto(e.getId(), e.getEmail());
+        Optional<Etudiant> etudiant1 = etudiantRepository.findByEmail(etudiant.getEmail());
+        Etudiant e = etudiant1.orElseThrow(() -> new RuntimeException("Aucun compte avec cet email."));
+
+        if (etudiant.getMotDePasse() == null ||
+            !etudiant.getMotDePasse().equals(e.getMotDePasse())) {
+            throw new RuntimeException("Mot de passe incorrect.");
+        }
+
+        return new LoginResponseDto(e.getId(), e.getEmail(), e.getPrenom(), e.getNom());
 
 
     }

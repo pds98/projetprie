@@ -9,7 +9,7 @@ import com.dembaandousmane.gest_priere.etudiant.service.EtudiantService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthControllers {
 
    private final  AuthService authService;
