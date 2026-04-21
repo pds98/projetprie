@@ -36,6 +36,9 @@ public class Etudiant {
     @Column(nullable = false,unique = true)
     private String email;
 
+    @Column(nullable = false)
+    private String motDePasse;
+
     @OneToMany(mappedBy = "etudiant")
     private List <Reservation> reservations;
 

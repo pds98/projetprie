@@ -6,6 +6,7 @@ import com.dembaandousmane.gest_priere.etudiant.repository.EtudiantRepository;
 import com.dembaandousmane.gest_priere.etudiant.service.EtudiantService;
 import com.dembaandousmane.gest_priere.groupe.controllers.GroupeController;
 import com.dembaandousmane.gest_priere.groupe.dto.GroupeDtoResponse;
+import com.dembaandousmane.gest_priere.groupe.dto.GroupeRequestDto;
 import com.dembaandousmane.gest_priere.groupe.model.Groupe;
 import com.dembaandousmane.gest_priere.groupe.repository.GroupeRepository;
 import com.dembaandousmane.gest_priere.reservation.model.Reservation;
@@ -24,22 +25,22 @@ public class GroupeService {
         this.groupeRepository = groupeRepository;
     }
 
-    public GroupeDtoResponse creerGroupe(Groupe groupe, Long id ){
+    public GroupeDtoResponse creerGroupe(GroupeRequestDto requestDto){
 
-        if(groupe == null){
-            throw new RuntimeException("le groupe est null");
+        if(requestDto.getDescription() == null){
+            throw new RuntimeException("le champ de description est obligatoire");
         }
-        if(groupe.getNom() == null){
-            throw new RuntimeException("le nom est obligatoire");
+        if(requestDto.getEtudiantId() == null){
+            throw new RuntimeException("l'id etudiant doit etre obligatoire ");
         }
 
 
 
-        Etudiant e = etudiantService.trouverEtudiantParId(id);
+        Etudiant e = etudiantService.trouverEtudiantParId(requestDto.getEtudiantId());
 
-        Groupe g = Groupe.builder().nom(groupe.getNom())
-                .description(groupe.getDescription())
-                .createurGroupe(e).build();
+        Groupe g = Groupe.builder().nom(requestDto.getNom())
+                .description(requestDto.getDescription()).build();
+
 
 
         e.creerGroupe(g);
@@ -56,18 +57,15 @@ public class GroupeService {
 
     }
 
-    public void supprimerGroupe(Long groupeId, Long etudiantId){
+    public void supprimerGroupe(Long groupeId){
 
-        if(groupeId == 0 || etudiantId == 0){
-            throw new RuntimeException("l'id du groupe ou le etudiantId est null");
-        }
 
         Groupe groupe = groupeRepository.findById(groupeId).orElseThrow(() ->  new RuntimeException("groupe n'existe pas"));
-        Etudiant etudiant = etudiantService.trouverEtudiantParId(etudiantId);
+        Etudiant etudiant = groupe.getCreateurGroupe();
 
-
-        groupeRepository.delete(groupe);
         etudiant.retirerGroupe(groupe);
+        groupeRepository.delete(groupe);
+
 
 
     }

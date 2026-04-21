@@ -5,10 +5,14 @@ import com.dembaandousmane.gest_priere.etudiant.model.Etudiant;
 import com.dembaandousmane.gest_priere.etudiant.service.EtudiantService;
 import com.dembaandousmane.gest_priere.forum.model.Forum;
 import com.dembaandousmane.gest_priere.forum.service.ForumService;
+import com.dembaandousmane.gest_priere.message.dto.MessageRequestDto;
 import com.dembaandousmane.gest_priere.message.dto.MessageResponseDto;
 import com.dembaandousmane.gest_priere.message.model.Message;
 import com.dembaandousmane.gest_priere.message.repository.MessageRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 public class MessageService {
@@ -24,36 +28,32 @@ public class MessageService {
         this.messageRepository = messageRepository;
     }
 
-    public MessageResponseDto creerMessage(Message message , Long idEtudiant,  Long idForum){
+    public MessageResponseDto creerMessage(MessageRequestDto request){
 
-
-        if(message == null){
-            throw new RuntimeException("message null");
+        if(request.getContenu() == null){
+            throw new RuntimeException("le champ du contenu est obligatoire");
         }
 
-        if(message.getContenu() == null || message.getContenu().isBlank()){
-            throw new RuntimeException("contenu obligatoire");
+        if(request.getIdEtudiant() == null){
+            throw new RuntimeException("le champ de l'id etudiant est obligatoire");
         }
 
-        if(idEtudiant == null){
-            throw new RuntimeException("idEtudiant obligatoire");
+        if(request.getIdForum() == null){
+            throw new RuntimeException("le champ id forum est obligatoire");
         }
 
-        if(idForum == null){
-            throw new RuntimeException("idForum obligatoire");
-        }
+        Forum forum = forumService.trouverForumById(request.getIdForum());
+        Etudiant etudiant = etudiantService.trouverEtudiantParId(request.getIdEtudiant());
 
-        Forum forum = forumService.trouverForumById(idForum);
-        Etudiant etudiant = etudiantService.trouverEtudiantParId(idEtudiant);
-
-        Message message1 = Message.builder().contenu(message.getContenu())
-                .dateCreation(message.getDateCreation()).build();
+        Message message = Message.builder().contenu(request.getContenu())
+                .dateCreation(LocalDateTime.now())
+                .build();
 
 
-        etudiant.ajouterMessage(message1);
-        forum.ajouterMessage(message1);
+        etudiant.ajouterMessage(message);
+        forum.ajouterMessage(message);
 
-       Message saved =   messageRepository.save(message1);
+        Message saved =   messageRepository.save(message);
 
         MessageResponseDto responseDto = MessageResponseDto.builder()
                 .id(saved.getId()).contenu(saved.getContenu())
@@ -67,6 +67,29 @@ public class MessageService {
 
 
 
+
+    }
+
+    @Transactional
+    public void supprimerMessage(Long messageId){
+
+
+
+        Message message = messageRepository.findById(messageId).orElseThrow(() -> new RuntimeException("le message n'existe pas"));
+
+        Etudiant etudiant = message.getEtudiant();
+        Forum forum = message.getForum();
+
+         if(etudiant != null){
+             etudiant.supprimerMessage(message);
+         }
+
+         if(forum != null){
+             forum.supprimerMessage(message);
+         }
+
+
+        messageRepository.delete(message);
 
     }
 

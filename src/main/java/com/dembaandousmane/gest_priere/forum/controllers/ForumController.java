@@ -5,6 +5,7 @@ import com.dembaandousmane.gest_priere.etudiant.model.Etudiant;
 import com.dembaandousmane.gest_priere.etudiant.repository.EtudiantRepository;
 import com.dembaandousmane.gest_priere.etudiant.service.EtudiantService;
 import com.dembaandousmane.gest_priere.forum.dto.ForumDto;
+import com.dembaandousmane.gest_priere.forum.dto.ForumRequestDto;
 import com.dembaandousmane.gest_priere.forum.model.Forum;
 import com.dembaandousmane.gest_priere.forum.service.ForumService;
 import jakarta.transaction.Transactional;
@@ -22,8 +23,8 @@ public class ForumController {
     }
 
     @PostMapping
-    public ForumDto creerForum(@RequestBody Forum forum , @RequestParam Long etudiantId){
-        return forumService.creerForum(forum, etudiantId);
+    public ForumDto creerForum(@RequestBody ForumRequestDto forumRequestDto){
+        return forumService.creerForum(forumRequestDto);
     }
 
     @DeleteMapping

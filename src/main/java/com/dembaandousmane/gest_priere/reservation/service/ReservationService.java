@@ -7,11 +7,13 @@ import com.dembaandousmane.gest_priere.evenement.model.Evenement;
 import com.dembaandousmane.gest_priere.priere.model.Priere;
 import com.dembaandousmane.gest_priere.priere.service.PriereService;
 import com.dembaandousmane.gest_priere.reservation.controllers.ReservationController;
+import com.dembaandousmane.gest_priere.reservation.dto.ReservationRequestDto;
 import com.dembaandousmane.gest_priere.reservation.dto.ReservationResponseDto;
 import com.dembaandousmane.gest_priere.reservation.model.Reservation;
 import com.dembaandousmane.gest_priere.reservation.repository.ReservationRepository;
 import com.dembaandousmane.gest_priere.salle.model.Salle;
 import com.dembaandousmane.gest_priere.salle.service.SalleService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,32 +34,33 @@ public class ReservationService {
         this.reservationRepository = reservationRepository;
     }
 
-    public ReservationResponseDto creerReservation(Reservation reservation, Long etudiantId, Long salleId, Long priereId){
+    public ReservationResponseDto creerReservation(ReservationRequestDto reservationRequestDto){
 
 
-        if(reservation == null){
-            throw new RuntimeException("reservation null");
+        if(reservationRequestDto.getMotif() == null){
+            throw new RuntimeException("le champ motif est obligatoire");
         }
 
-        if(etudiantId == null || salleId == null || priereId == null){
+        if(reservationRequestDto.getIdEtudiant() == null || reservationRequestDto.getIdPriere() == null || reservationRequestDto.getIdSalle() == null){
             throw new RuntimeException("les champ id doivent etre obligatoire");
         }
 
-        if(reservation.getDebut() == null || reservation.getFin() ==  null){
+        if(reservationRequestDto.getDateDebut() == null || reservationRequestDto.getDateFin() ==  null){
             throw new RuntimeException("les champs debut et fin doivent etre obligatoire");
         }
 
-        Etudiant e = etudiantService.trouverEtudiantParId(etudiantId);
-        Salle s = salleService.trouverSalleParId(salleId);
-        Priere p = priereService.trouverPriereParId(priereId);
+        Etudiant e = etudiantService.trouverEtudiantParId(reservationRequestDto.getIdEtudiant());
+        Salle s = salleService.trouverSalleParId(reservationRequestDto.getIdSalle());
+        Priere p = priereService.trouverPriereParId(reservationRequestDto.getIdSalle());
+
 
         if(!s.estLibre()){
             throw new RuntimeException("la classe est deja reservé.........");
         }
 
-        Reservation r = Reservation.builder().debut(reservation.getDebut())
-                .fin(reservation.getFin())
-                .motif(reservation.getMotif())
+        Reservation r = Reservation.builder().debut(reservationRequestDto.getDateDebut())
+                .fin(reservationRequestDto.getDateFin())
+                .motif(reservationRequestDto.getMotif())
                 .estActif(true)
                 .build();
 
@@ -82,7 +85,7 @@ public class ReservationService {
 
     }
 
-
+    @Transactional
     public void annulerReservation(Long idReservation){
 
         Reservation r = reservationRepository.findById(idReservation).orElseThrow(() -> new RuntimeException("la reservation n'existe pas"));

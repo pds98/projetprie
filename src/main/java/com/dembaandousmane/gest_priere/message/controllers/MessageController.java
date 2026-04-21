@@ -1,9 +1,11 @@
 package com.dembaandousmane.gest_priere.message.controllers;
 
 
+import com.dembaandousmane.gest_priere.message.dto.MessageRequestDto;
 import com.dembaandousmane.gest_priere.message.dto.MessageResponseDto;
 import com.dembaandousmane.gest_priere.message.model.Message;
 import com.dembaandousmane.gest_priere.message.service.MessageService;
+import jakarta.transaction.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,14 +19,18 @@ public class MessageController {
     }
 
     @PostMapping
-    public MessageResponseDto creerMessage(@RequestBody Message message, @RequestParam Long idEtudiant, @RequestParam Long idForum){
+    public MessageResponseDto creerMessage(@RequestBody MessageRequestDto messageRequestDto){
 
-       return  messageService.creerMessage(message,idEtudiant, idForum);
+       return  messageService.creerMessage(messageRequestDto);
 
     }
 
-    @DeleteMapping
-    public void supprimerMessage(){}
+    @DeleteMapping("/{messageId}")
+
+    public void supprimerMessage(@PathVariable Long messageId){
+
+        messageService.supprimerMessage(messageId);
+    }
 
 
    @PutMapping

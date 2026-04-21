@@ -4,6 +4,7 @@ package com.dembaandousmane.gest_priere.forum.service;
 import com.dembaandousmane.gest_priere.etudiant.model.Etudiant;
 import com.dembaandousmane.gest_priere.etudiant.service.EtudiantService;
 import com.dembaandousmane.gest_priere.forum.dto.ForumDto;
+import com.dembaandousmane.gest_priere.forum.dto.ForumRequestDto;
 import com.dembaandousmane.gest_priere.forum.model.Forum;
 import com.dembaandousmane.gest_priere.forum.repository.ForumRepository;
 import org.springframework.stereotype.Service;
@@ -20,28 +21,28 @@ public class ForumService {
         this.forumRepository = forumRepository;
     }
 
-    public ForumDto creerForum(Forum forum, Long id ){
+    public ForumDto creerForum(ForumRequestDto requestDto){
 
 
-        if(forum == null){
-            throw new RuntimeException("le forum est null");
+        if(requestDto.getIdEtudiant() == null){
+            throw new RuntimeException("l'id etudiant est obligatoire...");
         }
 
-        if(forum.getSujet() == null){
+        if(requestDto.getSujet() == null){
 
             throw new RuntimeException("le champ sujet est obligatoire");
         }
 
 
-        Etudiant etudiant = etudiantService.trouverEtudiantParId(id);
+        Etudiant etudiant = etudiantService.trouverEtudiantParId(requestDto.getIdEtudiant());
 
-        Forum forum1 = Forum.builder()
-                .sujet(forum.getSujet())
-                .dateCreation(forum.getDateCreation())
+        Forum forum = Forum.builder()
+                .sujet(requestDto.getSujet())
+                .dateCreation(requestDto.getDateCreation())
                 .etudiant(etudiant)
                 .build();
 
-        Forum saved = forumRepository.save(forum1);
+        Forum saved = forumRepository.save(forum);
 
         ForumDto forumDto = ForumDto.builder().id(saved.getId())
                 .dateCreation(saved.getDateCreation())
@@ -51,14 +52,11 @@ public class ForumService {
     }
 
    public void supprimerForumParId(Long id){
-        Optional<Forum> forum =  forumRepository.findById(id);
+       Forum forum = trouverForumById(id);
 
+        forum.setEtudiant(null);
+        forumRepository.delete(forum);
 
-        Forum  f= forum.orElseThrow(() -> new RuntimeException("forum non trouvé "));
-
-        if (f != null){
-            forumRepository.deleteById(id);
-        }
    }
 
    public Forum trouverForumById(Long id){

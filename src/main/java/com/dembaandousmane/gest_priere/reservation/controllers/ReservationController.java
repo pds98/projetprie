@@ -3,6 +3,8 @@ package com.dembaandousmane.gest_priere.reservation.controllers;
 
 import com.dembaandousmane.gest_priere.etudiant.model.Etudiant;
 import com.dembaandousmane.gest_priere.evenement.model.Evenement;
+import com.dembaandousmane.gest_priere.message.dto.MessageRequestDto;
+import com.dembaandousmane.gest_priere.reservation.dto.ReservationRequestDto;
 import com.dembaandousmane.gest_priere.reservation.dto.ReservationResponseDto;
 import com.dembaandousmane.gest_priere.reservation.model.Reservation;
 import com.dembaandousmane.gest_priere.reservation.repository.ReservationRepository;
@@ -28,14 +30,13 @@ public class ReservationController {
 
 
     @PostMapping()
-    public ReservationResponseDto creerReservation(@RequestBody Reservation reservation, @RequestParam Long etudiantId, @RequestParam Long salleId, @RequestParam Long priereId ){
+    public ReservationResponseDto creerReservation(@RequestBody ReservationRequestDto reservationRequestDto){
 
-      return reservationService.creerReservation(reservation, etudiantId, salleId, priereId);
+      return reservationService.creerReservation(reservationRequestDto);
 
     }
 
     @DeleteMapping
-    @Transactional
     public void annulerReservation(@RequestParam Long idReservation){
 
          reservationService.annulerReservation(idReservation);

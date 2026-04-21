@@ -2,6 +2,7 @@ package com.dembaandousmane.gest_priere.groupe.controllers;
 
 
 import com.dembaandousmane.gest_priere.groupe.dto.GroupeDtoResponse;
+import com.dembaandousmane.gest_priere.groupe.dto.GroupeRequestDto;
 import com.dembaandousmane.gest_priere.groupe.model.Groupe;
 import com.dembaandousmane.gest_priere.groupe.service.GroupeService;
 import com.dembaandousmane.gest_priere.reservation.model.Reservation;
@@ -19,14 +20,14 @@ private final GroupeService groupeService;
     }
 
     @PostMapping
-    public GroupeDtoResponse creerGroupe(@RequestBody Groupe groupe, @RequestParam Long etudiantId){
-        return groupeService.creerGroupe(groupe, etudiantId);
+    public GroupeDtoResponse creerGroupe(@RequestBody GroupeRequestDto requestDto){
+        return groupeService.creerGroupe(requestDto);
     }
 
-    @DeleteMapping
-    public void supprimerGroupe(@RequestParam Long groupeId, @RequestParam Long etudiantId){
+    @DeleteMapping("{groupeId}")
+    public void supprimerGroupe(@PathVariable Long groupeId){
 
-      groupeService.supprimerGroupe(groupeId, etudiantId);
+      groupeService.supprimerGroupe(groupeId);
     }
 
     @PostMapping("rejoindre/")
