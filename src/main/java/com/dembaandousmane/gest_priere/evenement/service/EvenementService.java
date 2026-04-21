@@ -26,14 +26,14 @@ public class EvenementService {
 
     }
 
-    public EvenementResponseDto creeEvenement(EvenementRequestDto requestDto){
+    public EvenementResponseDto creeEvenement(EvenementRequestDto requestDto, Long idEtudiant){
 
 
-        if(requestDto.getEtudiantId() == null && requestDto.getNom() == null){
+        if(idEtudiant == null && requestDto.getNom() == null){
             throw new RuntimeException("Nom obligatoire");
         }
 
-        Etudiant etudiant = etudiantService.trouverEtudiantParId(requestDto.getEtudiantId());
+        Etudiant etudiant = etudiantService.trouverEtudiantParId(idEtudiant);
 
 
 

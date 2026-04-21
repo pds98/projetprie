@@ -21,10 +21,10 @@ public class EvenementController {
     }
 
 
-    @PostMapping
-    public EvenementResponseDto creerEvenement(@RequestBody EvenementRequestDto requestDto){
+    @PostMapping("/{idEtudiant}")
+    public EvenementResponseDto creerEvenement(@RequestBody EvenementRequestDto requestDto, @PathVariable Long idEtudiant){
 
-        return evenementService.creeEvenement(requestDto);
+        return evenementService.creeEvenement(requestDto, idEtudiant);
     }
 
     @DeleteMapping
