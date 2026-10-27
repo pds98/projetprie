@@ -42,12 +42,16 @@ export default function GroupeScreen() {
       Alert.alert('Champ requis', 'Le nom du groupe est obligatoire.');
       return;
     }
+    if (!currentUser?.id) {
+      Alert.alert('Erreur', 'Vous devez être connecté pour créer un groupe.');
+      return;
+    }
     setSaving(true);
     try {
       await groupeAPI.create({
-        nom: form.nom,
-        description: form.description,
-        idEtudiant: currentUser?.id || null,
+        nom:         form.nom,
+        description: form.description || '',
+        etudiantId:  currentUser.id,
       });
       setModalVisible(false);
       setForm({ nom: '', description: '' });

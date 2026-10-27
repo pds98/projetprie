@@ -39,7 +39,7 @@ public class ForumService {
 
         Forum forum = Forum.builder()
                 .sujet(requestDto.getSujet())
-                .dateCreation(requestDto.getDateCreation() != null ? requestDto.getDateCreation() : java.time.LocalDateTime.now())
+                .dateCreation(java.time.LocalDateTime.now())
                 .etudiant(etudiant)
                 .build();
 

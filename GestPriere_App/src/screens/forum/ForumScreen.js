@@ -57,9 +57,8 @@ export default function ForumScreen({ navigation }) {
     setCreating(true);
     try {
       await forumAPI.create({
-        sujet:        newSujet.trim(),
-        idEtudiant:   currentUser.id,
-        dateCreation: new Date().toISOString(),
+        sujet:      newSujet.trim(),
+        idEtudiant: currentUser.id,
       });
       setNewSujet('');
       setCreateVisible(false);
