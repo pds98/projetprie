@@ -56,8 +56,10 @@ export default function GroupeScreen() {
       setModalVisible(false);
       setForm({ nom: '', description: '' });
       fetchGroupes();
-    } catch {
-      Alert.alert('Erreur', 'Impossible de créer le groupe.');
+    } catch (e) {
+      const status = e?.response?.status;
+      const msg    = e?.response?.data?.message || e?.response?.data || e?.message || 'Erreur inconnue';
+      Alert.alert(`Erreur ${status || ''}`, String(msg));
     } finally {
       setSaving(false);
     }

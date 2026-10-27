@@ -63,8 +63,10 @@ export default function ForumScreen({ navigation }) {
       setNewSujet('');
       setCreateVisible(false);
       fetchForums();
-    } catch {
-      Alert.alert('Erreur', 'Impossible de créer le forum.');
+    } catch (e) {
+      const status = e?.response?.status;
+      const msg    = e?.response?.data?.message || e?.response?.data || e?.message || 'Erreur inconnue';
+      Alert.alert(`Erreur ${status || ''}`, String(msg));
     } finally {
       setCreating(false);
     }
