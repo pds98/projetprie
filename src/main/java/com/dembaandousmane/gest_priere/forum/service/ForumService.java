@@ -9,6 +9,7 @@ import com.dembaandousmane.gest_priere.forum.model.Forum;
 import com.dembaandousmane.gest_priere.forum.repository.ForumRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -50,6 +51,10 @@ public class ForumService {
 
         return forumDto;
     }
+
+   public List<Forum> getTousLesForums(){
+       return forumRepository.findAll();
+   }
 
    public void supprimerForumParId(Long id){
        Forum forum = trouverForumById(id);

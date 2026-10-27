@@ -1,0 +1,74 @@
+classDiagram
+    direction TB
+
+    class Etudiant {
+        +Long id
+        +String nom
+        +String prenom
+        +String email
+        +String telephone
+        +String motDePasse
+    }
+
+    class Evenement {
+        +Long id
+        +String nom
+        +String description
+        +String lieu
+        +LocalDateTime dateCreation
+        +boolean estActif
+    }
+
+    class Reservation {
+        +Long id
+    }
+
+    class Groupe {
+        +Long id
+        +String nom
+    }
+
+    class Forum {
+        +Long id
+        +String titre
+    }
+
+    class Message {
+        +Long id
+        +String contenu
+        +LocalDateTime dateEnvoi
+    }
+
+    %% Authentification
+    class LoginResponseDto {
+        +Long id
+        +String email
+        +String prenom
+        +String nom
+    }
+
+    class InscriptionResponseDto {
+        +Long id
+        +String email
+        +String prenom
+    }
+
+    %% Relations Etudiant → Evenement
+    Etudiant "1" --> "0..*" Evenement : crée\n(createurEvenement)
+    Etudiant "0..*" o--o "0..*" Evenement : participe à\n(participation_evenement)
+
+    %% Relations Etudiant → Groupe
+    Etudiant "1" --> "0..*" Groupe : crée\n(createurGroupe)
+    Etudiant "0..*" o--o "0..*" Groupe : membre de\n(groupe_membre)
+
+    %% Relations Etudiant → autres
+    Etudiant "1" --> "0..*" Reservation : possède
+    Etudiant "1" --> "0..*" Forum : crée
+    Etudiant "1" --> "0..*" Message : envoie
+
+    %% Forum → Message
+    Forum "1" --> "0..*" Message : contient
+
+    %% DTO
+    Etudiant ..> LoginResponseDto : retourné au login
+    Etudiant ..> InscriptionResponseDto : retourné à l inscription

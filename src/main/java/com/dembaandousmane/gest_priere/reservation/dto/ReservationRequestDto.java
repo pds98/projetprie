@@ -13,9 +13,10 @@ import java.time.LocalDateTime;
 public class ReservationRequestDto {
 
     private String motif;
-    private LocalDateTime dateDebut ;
-    private LocalDateTime dateFin;
+    private LocalDateTime debut;
+    private LocalDateTime fin;
     private Long idEtudiant;
     private Long idSalle;
     private Long idPriere;
+    private Integer nombrePersonnes;
 }

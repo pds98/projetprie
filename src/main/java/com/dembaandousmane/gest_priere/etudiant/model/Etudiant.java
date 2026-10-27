@@ -5,6 +5,7 @@ import com.dembaandousmane.gest_priere.forum.model.Forum;
 import com.dembaandousmane.gest_priere.groupe.model.Groupe;
 import com.dembaandousmane.gest_priere.message.model.Message;
 import com.dembaandousmane.gest_priere.reservation.model.Reservation;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -39,11 +40,13 @@ public class Etudiant {
     @Column(nullable = false)
     private String motDePasse;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "etudiant")
     private List <Reservation> reservations;
 
 
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "groupe_membre",
@@ -53,23 +56,24 @@ public class Etudiant {
     private List <Groupe> groupesRejoins;
 
 
+    @JsonIgnore
     @OneToMany(mappedBy = "createurGroupe")
     private List <Groupe> groupesCrees;
 
 
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "participation_evenement",
             joinColumns = @JoinColumn(name = "id_etudiant"),
             inverseJoinColumns = @JoinColumn(name = "id_evenement"))
     private List<Evenement> evenementsParticipe = new ArrayList<>();
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "createurEvenement")
     private List <Evenement> evenementsCrees = new ArrayList<>();
 
-
-
+    @JsonIgnore
     @OneToMany(mappedBy = "etudiant")
     private List <Message> messages = new ArrayList<>();
 
@@ -78,6 +82,7 @@ public class Etudiant {
 
 
 
+    @JsonIgnore
     @OneToMany(mappedBy = "etudiant")
     private List<Forum> forums;
 

@@ -1,0 +1,237 @@
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="1">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- ══ TITRE ══════════════════════════════════════════════════════════════ -->
+    <mxCell id="titre" value="Diagramme de Classes  ||  Système de Gestion de Prière" style="text;html=1;strokeColor=none;fillColor=#1F4E79;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontColor=#ffffff;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="100" y="20" width="920" height="36" as="geometry" />
+    </mxCell>
+
+    <!-- ══ ETUDIANT ═══════════════════════════════════════════════════════════ -->
+    <mxCell id="etudiant" value="Etudiant" style="swimlane;fontStyle=1;align=center;startSize=28;fillColor=#1F4E79;strokeColor=#1F4E79;fontColor=#ffffff;fontSize=12;rounded=0;" vertex="1" parent="1">
+      <mxGeometry x="380" y="75" width="240" height="200" as="geometry" />
+    </mxCell>
+    <mxCell id="et_attrs" value="- id : int&#xa;- nom : String&#xa;- prenom : String&#xa;- telephone : String&#xa;- email : String" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=top;spacingLeft=8;fontSize=11;whiteSpace=nowrap;" vertex="1" parent="etudiant">
+      <mxGeometry y="28" width="240" height="88" as="geometry" />
+    </mxCell>
+    <mxCell id="et_sep" value="" style="line;strokeColor=#1F4E79;fillColor=none;" vertex="1" parent="etudiant">
+      <mxGeometry y="116" width="240" height="8" as="geometry" />
+    </mxCell>
+    <mxCell id="et_methods" value="+ reserverSalle()&#xa;+ annulerReservation()&#xa;+ consulterReservation()" style="text;strokeColor=none;fillColor=#EBF3FB;align=left;verticalAlign=top;spacingLeft=8;fontSize=11;whiteSpace=nowrap;" vertex="1" parent="etudiant">
+      <mxGeometry y="124" width="240" height="76" as="geometry" />
+    </mxCell>
+
+    <!-- ══ SALLE ═══════════════════════════════════════════════════════════════ -->
+    <mxCell id="salle" value="Salle" style="swimlane;fontStyle=1;align=center;startSize=28;fillColor=#1F4E79;strokeColor=#1F4E79;fontColor=#ffffff;fontSize=12;rounded=0;" vertex="1" parent="1">
+      <mxGeometry x="60" y="220" width="210" height="190" as="geometry" />
+    </mxCell>
+    <mxCell id="sa_attrs" value="- id : int&#xa;- capacite : int&#xa;- statut : String" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=top;spacingLeft=8;fontSize=11;whiteSpace=nowrap;" vertex="1" parent="salle">
+      <mxGeometry y="28" width="210" height="64" as="geometry" />
+    </mxCell>
+    <mxCell id="sa_sep" value="" style="line;strokeColor=#1F4E79;fillColor=none;" vertex="1" parent="salle">
+      <mxGeometry y="92" width="210" height="8" as="geometry" />
+    </mxCell>
+    <mxCell id="sa_methods" value="+ estDisponible()&#xa;+ libererSalle()&#xa;+ afficherInformation()" style="text;strokeColor=none;fillColor=#EBF3FB;align=left;verticalAlign=top;spacingLeft=8;fontSize=11;whiteSpace=nowrap;" vertex="1" parent="salle">
+      <mxGeometry y="100" width="210" height="90" as="geometry" />
+    </mxCell>
+
+    <!-- ══ PRIERE ══════════════════════════════════════════════════════════════ -->
+    <mxCell id="priere" value="Priere" style="swimlane;fontStyle=1;align=center;startSize=28;fillColor=#1F4E79;strokeColor=#1F4E79;fontColor=#ffffff;fontSize=12;rounded=0;" vertex="1" parent="1">
+      <mxGeometry x="850" y="220" width="210" height="160" as="geometry" />
+    </mxCell>
+    <mxCell id="pr_attrs" value="- id : int&#xa;- nom : String&#xa;- description : String" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=top;spacingLeft=8;fontSize=11;whiteSpace=nowrap;" vertex="1" parent="priere">
+      <mxGeometry y="28" width="210" height="64" as="geometry" />
+    </mxCell>
+    <mxCell id="pr_sep" value="" style="line;strokeColor=#1F4E79;fillColor=none;" vertex="1" parent="priere">
+      <mxGeometry y="92" width="210" height="8" as="geometry" />
+    </mxCell>
+    <mxCell id="pr_methods" value="+ afficher(heure)" style="text;strokeColor=none;fillColor=#EBF3FB;align=left;verticalAlign=top;spacingLeft=8;fontSize=11;whiteSpace=nowrap;" vertex="1" parent="priere">
+      <mxGeometry y="100" width="210" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- ══ RESERVATION (centrale) ══════════════════════════════════════════════ -->
+    <mxCell id="reservation" value="Reservation" style="swimlane;fontStyle=1;align=center;startSize=28;fillColor=#1F4E79;strokeColor=#1F4E79;fontColor=#ffffff;fontSize=12;rounded=0;" vertex="1" parent="1">
+      <mxGeometry x="340" y="310" width="300" height="310" as="geometry" />
+    </mxCell>
+    <mxCell id="rs_attrs" value="- id : int&#xa;- idSalle : int&#xa;- idEtu : int&#xa;- idPriere : int&#xa;- debut : LocalDateTime&#xa;- fin : LocalDateTime&#xa;- nombrePersonnes : int&#xa;- motif : String&#xa;- estReserve : boolean" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=top;spacingLeft=8;fontSize=11;whiteSpace=nowrap;" vertex="1" parent="reservation">
+      <mxGeometry y="28" width="300" height="172" as="geometry" />
+    </mxCell>
+    <mxCell id="rs_sep" value="" style="line;strokeColor=#1F4E79;fillColor=none;" vertex="1" parent="reservation">
+      <mxGeometry y="200" width="300" height="8" as="geometry" />
+    </mxCell>
+    <mxCell id="rs_methods" value="+ creerReservation()&#xa;+ annulerReservation()&#xa;+ confirmerReservation()" style="text;strokeColor=none;fillColor=#EBF3FB;align=left;verticalAlign=top;spacingLeft=8;fontSize=11;whiteSpace=nowrap;" vertex="1" parent="reservation">
+      <mxGeometry y="208" width="300" height="102" as="geometry" />
+    </mxCell>
+
+    <!-- ══ GROUPE ══════════════════════════════════════════════════════════════ -->
+    <mxCell id="groupe" value="Groupe" style="swimlane;fontStyle=1;align=center;startSize=28;fillColor=#1F4E79;strokeColor=#1F4E79;fontColor=#ffffff;fontSize=12;rounded=0;" vertex="1" parent="1">
+      <mxGeometry x="60" y="520" width="230" height="185" as="geometry" />
+    </mxCell>
+    <mxCell id="gr_attrs" value="- id : int&#xa;- nom : String&#xa;- membres : List&lt;Etudiant&gt;&#xa;- description : String" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=top;spacingLeft=8;fontSize=11;whiteSpace=nowrap;" vertex="1" parent="groupe">
+      <mxGeometry y="28" width="230" height="80" as="geometry" />
+    </mxCell>
+    <mxCell id="gr_sep" value="" style="line;strokeColor=#1F4E79;fillColor=none;" vertex="1" parent="groupe">
+      <mxGeometry y="108" width="230" height="8" as="geometry" />
+    </mxCell>
+    <mxCell id="gr_methods" value="+ ajouterMembre()&#xa;+ supprimerMembre()" style="text;strokeColor=none;fillColor=#EBF3FB;align=left;verticalAlign=top;spacingLeft=8;fontSize=11;whiteSpace=nowrap;" vertex="1" parent="groupe">
+      <mxGeometry y="116" width="230" height="69" as="geometry" />
+    </mxCell>
+
+    <!-- ══ EVENEMENT ═══════════════════════════════════════════════════════════ -->
+    <mxCell id="evenement" value="Evenement" style="swimlane;fontStyle=1;align=center;startSize=28;fillColor=#1F4E79;strokeColor=#1F4E79;fontColor=#ffffff;fontSize=12;rounded=0;" vertex="1" parent="1">
+      <mxGeometry x="830" y="490" width="240" height="200" as="geometry" />
+    </mxCell>
+    <mxCell id="ev_attrs" value="- id : int&#xa;- nom : String&#xa;- dateCreation : LocalDateTime&#xa;- lieu : String&#xa;- statut : String" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=top;spacingLeft=8;fontSize=11;whiteSpace=nowrap;" vertex="1" parent="evenement">
+      <mxGeometry y="28" width="240" height="100" as="geometry" />
+    </mxCell>
+    <mxCell id="ev_sep" value="" style="line;strokeColor=#1F4E79;fillColor=none;" vertex="1" parent="evenement">
+      <mxGeometry y="128" width="240" height="8" as="geometry" />
+    </mxCell>
+    <mxCell id="ev_methods" value="+ afficherEvenement()&#xa;+ retirerEvenement()" style="text;strokeColor=none;fillColor=#EBF3FB;align=left;verticalAlign=top;spacingLeft=8;fontSize=11;whiteSpace=nowrap;" vertex="1" parent="evenement">
+      <mxGeometry y="136" width="240" height="64" as="geometry" />
+    </mxCell>
+
+    <!-- ══ FORUM ═══════════════════════════════════════════════════════════════ -->
+    <mxCell id="forum" value="Forum" style="swimlane;fontStyle=1;align=center;startSize=28;fillColor=#1F4E79;strokeColor=#1F4E79;fontColor=#ffffff;fontSize=12;rounded=0;" vertex="1" parent="1">
+      <mxGeometry x="290" y="680" width="210" height="170" as="geometry" />
+    </mxCell>
+    <mxCell id="fo_attrs" value="- id : int&#xa;- sujet : String&#xa;- dateCreation : LocalDateTime" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=top;spacingLeft=8;fontSize=11;whiteSpace=nowrap;" vertex="1" parent="forum">
+      <mxGeometry y="28" width="210" height="64" as="geometry" />
+    </mxCell>
+    <mxCell id="fo_sep" value="" style="line;strokeColor=#1F4E79;fillColor=none;" vertex="1" parent="forum">
+      <mxGeometry y="92" width="210" height="8" as="geometry" />
+    </mxCell>
+    <mxCell id="fo_methods" value="+ ajouterMessage()&#xa;+ afficherDiscussion()" style="text;strokeColor=none;fillColor=#EBF3FB;align=left;verticalAlign=top;spacingLeft=8;fontSize=11;whiteSpace=nowrap;" vertex="1" parent="forum">
+      <mxGeometry y="100" width="210" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- ══ MESSAGE ═════════════════════════════════════════════════════════════ -->
+    <mxCell id="message" value="Message" style="swimlane;fontStyle=1;align=center;startSize=28;fillColor=#1F4E79;strokeColor=#1F4E79;fontColor=#ffffff;fontSize=12;rounded=0;" vertex="1" parent="1">
+      <mxGeometry x="540" y="680" width="220" height="160" as="geometry" />
+    </mxCell>
+    <mxCell id="ms_attrs" value="- id : int&#xa;- theme : String&#xa;- dateCreation : LocalDateTime" style="text;strokeColor=none;fillColor=#ffffff;align=left;verticalAlign=top;spacingLeft=8;fontSize=11;whiteSpace=nowrap;" vertex="1" parent="message">
+      <mxGeometry y="28" width="220" height="64" as="geometry" />
+    </mxCell>
+    <mxCell id="ms_sep" value="" style="line;strokeColor=#1F4E79;fillColor=none;" vertex="1" parent="message">
+      <mxGeometry y="92" width="220" height="8" as="geometry" />
+    </mxCell>
+    <mxCell id="ms_methods" value="+ afficherMessage()&#xa;+ supprimer()" style="text;strokeColor=none;fillColor=#EBF3FB;align=left;verticalAlign=top;spacingLeft=8;fontSize=11;whiteSpace=nowrap;" vertex="1" parent="message">
+      <mxGeometry y="100" width="220" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- ══ RELATIONS ═══════════════════════════════════════════════════════════ -->
+
+    <!-- Etudiant → Reservation (1 to 0..*) — association directe -->
+    <mxCell id="rel_et_rs" value="" style="endArrow=open;endFill=0;endSize=8;startArrow=none;edgeStyle=orthogonalEdgeStyle;strokeColor=#1F4E79;strokeWidth=2;" edge="1" source="etudiant" target="reservation" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="lbl_et_rs_s" value="1" style="resizable=0;html=1;fontSize=12;fontStyle=1;align=left;" connectable="0" vertex="1" parent="rel_et_rs">
+      <mxGeometry x="-0.8" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+    <mxCell id="lbl_et_rs_t" value="0..*" style="resizable=0;html=1;fontSize=12;fontStyle=1;align=right;" connectable="0" vertex="1" parent="rel_et_rs">
+      <mxGeometry x="0.8" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+
+    <!-- Salle → Reservation (1 to 0..*) — association directe -->
+    <mxCell id="rel_sa_rs" value="" style="endArrow=open;endFill=0;endSize=8;edgeStyle=orthogonalEdgeStyle;strokeColor=#1F4E79;strokeWidth=2;" edge="1" source="salle" target="reservation" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="lbl_sa_rs_s" value="1" style="resizable=0;html=1;fontSize=12;fontStyle=1;" connectable="0" vertex="1" parent="rel_sa_rs">
+      <mxGeometry x="-0.8" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+    <mxCell id="lbl_sa_rs_t" value="0..*" style="resizable=0;html=1;fontSize=12;fontStyle=1;" connectable="0" vertex="1" parent="rel_sa_rs">
+      <mxGeometry x="0.8" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+
+    <!-- Priere → Reservation (1 to 0..*) — association directe -->
+    <mxCell id="rel_pr_rs" value="" style="endArrow=open;endFill=0;endSize=8;edgeStyle=orthogonalEdgeStyle;strokeColor=#1F4E79;strokeWidth=2;" edge="1" source="priere" target="reservation" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="lbl_pr_rs_s" value="1" style="resizable=0;html=1;fontSize=12;fontStyle=1;" connectable="0" vertex="1" parent="rel_pr_rs">
+      <mxGeometry x="-0.8" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+    <mxCell id="lbl_pr_rs_t" value="0..*" style="resizable=0;html=1;fontSize=12;fontStyle=1;" connectable="0" vertex="1" parent="rel_pr_rs">
+      <mxGeometry x="0.8" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+
+    <!-- Etudiant → Groupe (0..*) — tiret -->
+    <mxCell id="rel_et_gr" value="" style="endArrow=open;endFill=0;endSize=8;dashed=1;dashPattern=8 4;edgeStyle=orthogonalEdgeStyle;strokeColor=#1F4E79;strokeWidth=1.5;" edge="1" source="etudiant" target="groupe" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="430" y="600" />
+          <mxPoint x="175" y="600" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="lbl_et_gr_s" value="0..*" style="resizable=0;html=1;fontSize=11;fontStyle=2;" connectable="0" vertex="1" parent="rel_et_gr">
+      <mxGeometry x="-0.8" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+    <mxCell id="lbl_et_gr_t" value="0..*" style="resizable=0;html=1;fontSize=11;fontStyle=2;" connectable="0" vertex="1" parent="rel_et_gr">
+      <mxGeometry x="0.8" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+
+    <!-- Etudiant → Evenement (0..*) — tiret -->
+    <mxCell id="rel_et_ev" value="" style="endArrow=open;endFill=0;endSize=8;dashed=1;dashPattern=8 4;edgeStyle=orthogonalEdgeStyle;strokeColor=#1F4E79;strokeWidth=1.5;" edge="1" source="etudiant" target="evenement" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="570" y="590" />
+          <mxPoint x="950" y="590" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="lbl_et_ev_s" value="0..*" style="resizable=0;html=1;fontSize=11;fontStyle=2;" connectable="0" vertex="1" parent="rel_et_ev">
+      <mxGeometry x="-0.8" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+    <mxCell id="lbl_et_ev_t" value="0..*" style="resizable=0;html=1;fontSize=11;fontStyle=2;" connectable="0" vertex="1" parent="rel_et_ev">
+      <mxGeometry x="0.8" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+
+    <!-- Forum → Message (1 to 0..*) -->
+    <mxCell id="rel_fo_ms" value="" style="endArrow=open;endFill=0;endSize=8;edgeStyle=orthogonalEdgeStyle;strokeColor=#1F4E79;strokeWidth=2;" edge="1" source="forum" target="message" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="lbl_fo_ms_s" value="1" style="resizable=0;html=1;fontSize=12;fontStyle=1;" connectable="0" vertex="1" parent="rel_fo_ms">
+      <mxGeometry x="-0.8" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+    <mxCell id="lbl_fo_ms_t" value="0..*" style="resizable=0;html=1;fontSize=12;fontStyle=1;" connectable="0" vertex="1" parent="rel_fo_ms">
+      <mxGeometry x="0.8" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+
+    <!-- Etudiant → Forum (1 to 0..*) — tiret -->
+    <mxCell id="rel_et_fo" value="" style="endArrow=open;endFill=0;endSize=8;dashed=1;dashPattern=8 4;edgeStyle=orthogonalEdgeStyle;strokeColor=#1F4E79;strokeWidth=1.5;" edge="1" source="etudiant" target="forum" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="395" y="640" />
+          <mxPoint x="395" y="680" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="lbl_et_fo_t" value="0..*" style="resizable=0;html=1;fontSize=11;fontStyle=2;" connectable="0" vertex="1" parent="rel_et_fo">
+      <mxGeometry x="0.8" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+
+    <!-- ══ LÉGENDE ═════════════════════════════════════════════════════════════ -->
+    <mxCell id="legende_direct" value="" style="endArrow=open;endFill=0;endSize=8;strokeColor=#1F4E79;strokeWidth=2;" edge="1" parent="1">
+      <mxGeometry x="130" y="895" width="80" height="10" as="geometry">
+        <Array as="points" />
+        <mxPoint x="130" y="900" as="sourcePoint" />
+        <mxPoint x="210" y="900" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="legende_direct_lbl" value="Association directe ( 1 to 0..* )" style="text;strokeColor=none;fillColor=none;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="215" y="890" width="220" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="legende_dashed" value="" style="endArrow=open;endFill=0;endSize=8;dashed=1;dashPattern=8 4;strokeColor=#1F4E79;strokeWidth=1.5;" edge="1" parent="1">
+      <mxGeometry x="480" y="895" width="80" height="10" as="geometry">
+        <Array as="points" />
+        <mxPoint x="480" y="900" as="sourcePoint" />
+        <mxPoint x="560" y="900" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="legende_dashed_lbl" value="Association ( 0..* to 0..* )" style="text;strokeColor=none;fillColor=none;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="565" y="890" width="220" height="20" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>

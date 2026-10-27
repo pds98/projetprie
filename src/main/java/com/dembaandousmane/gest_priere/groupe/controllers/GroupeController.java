@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/groupe/")
+@RequestMapping("/api/groupes")
 public class GroupeController {
 private final GroupeService groupeService;
 
@@ -24,22 +24,20 @@ private final GroupeService groupeService;
         return groupeService.creerGroupe(requestDto);
     }
 
-    @DeleteMapping("{groupeId}")
+    @DeleteMapping("/{groupeId}")
     public void supprimerGroupe(@PathVariable Long groupeId){
-
-      groupeService.supprimerGroupe(groupeId);
+        groupeService.supprimerGroupe(groupeId);
     }
 
-    @PostMapping("rejoindre/")
-    public void rejoindreGroupe(@RequestParam Long etudiantId, @RequestParam Long groupeId){
-
-        groupeService.rejoindreGroupe(groupeId, etudiantId);
-
+    @PostMapping("/{id}/rejoindre")
+    public void rejoindreGroupe(@PathVariable Long id, @RequestBody java.util.Map<String, Object> body){
+        Long etudiantId = Long.valueOf(body.get("idEtudiant").toString());
+        groupeService.rejoindreGroupe(id, etudiantId);
     }
 
-    @PostMapping("quitter/")
-    public void quitterGroupe(@RequestParam Long etudiantId, @RequestParam Long groupeId){
-        groupeService.quitterGroupe(groupeId, etudiantId);
+    @DeleteMapping("/{id}/quitter/{idEtudiant}")
+    public void quitterGroupe(@PathVariable Long id, @PathVariable Long idEtudiant){
+        groupeService.quitterGroupe(id, idEtudiant);
     }
 
     @GetMapping

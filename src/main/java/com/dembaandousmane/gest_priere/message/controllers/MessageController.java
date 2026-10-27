@@ -9,7 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/messages/")
+@RequestMapping("/api/messages")
 public class MessageController {
 
     private final MessageService messageService;

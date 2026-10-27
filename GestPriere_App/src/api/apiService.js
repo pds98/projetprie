@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://9a91-70-27-223-121.ngrok-free.app/api';
+const BASE_URL = 'http://localhost:8080/api'; // Simulateur iOS → Spring Boot local (ancienne URL ngrok dans apiService.js.bak-ngrok)
 
 
 const api = axios.create({

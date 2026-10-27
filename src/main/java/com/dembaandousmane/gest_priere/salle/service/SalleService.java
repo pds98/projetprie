@@ -73,9 +73,11 @@ public class SalleService {
         }
     }
 
+    public List<Salle> avoirToutesLesSalles(){
+        return salleRepository.findAll();
+    }
+
     public List<Salle> avoirSalleLibre(){
-
         return salleRepository.findByStatut("libre");
-
     }
 }

@@ -1,6 +1,7 @@
 package com.dembaandousmane.gest_priere.evenement.model;
 
 import com.dembaandousmane.gest_priere.etudiant.model.Etudiant;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-
 @Getter
 @Setter
 @Builder
@@ -36,22 +36,13 @@ public class Evenement {
     @Column(nullable = false)
     private boolean estActif;
 
-
+    @JsonIgnore
     @Builder.Default
     @ManyToMany(mappedBy = "evenementsParticipe")
     private List<Etudiant> participants = new ArrayList<>();
 
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_etudiant")
     private Etudiant createurEvenement;
-
-
-
-
-
-
-
-
-
 }

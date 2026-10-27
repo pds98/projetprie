@@ -32,7 +32,7 @@ export default function LoginScreen({ navigation, onLogin }) {
       if (status === 401 && message) {
         Alert.alert('Connexion refusée', message);
       } else {
-        Alert.alert('Erreur réseau', 'Impossible de joindre le serveur. Vérifiez votre WiFi.');
+        Alert.alert('Erreur réseau', 'Impossible de joindre le serveur Vérifiez votre WiFi.');
       }
     } finally {
       setChargement(false);

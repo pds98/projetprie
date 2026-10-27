@@ -12,14 +12,18 @@ import jakarta.transaction.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/forum/")
+@RequestMapping("/api/forums")
 public class ForumController {
    private final ForumService forumService;
 
 
     public ForumController(ForumService forumService) {
         this.forumService = forumService;
+    }
 
+    @GetMapping
+    public java.util.List<Forum> getTousLesForums(){
+        return forumService.getTousLesForums();
     }
 
     @PostMapping
@@ -27,16 +31,10 @@ public class ForumController {
         return forumService.creerForum(forumRequestDto);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{idForum}")
     @Transactional
-    public void supprimerForumParId(@RequestParam Long idForum){
-
+    public void supprimerForumParId(@PathVariable Long idForum){
        forumService.supprimerForumParId(idForum);
     }
-
-    @PutMapping
-    public void modifierForum(){}
-
-
 
 }

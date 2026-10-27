@@ -1,6 +1,5 @@
 package com.dembaandousmane.gest_priere.evenement.dto;
 
-import com.dembaandousmane.gest_priere.evenement.model.Evenement;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -10,16 +9,13 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class EvenementResponseDto {
 
-    private String nom ;
+    private Long id;
+    private String nom;
     private String description;
-    private String lieu ;
-    private LocalDateTime dateCreation ;
-    private Long etudiantId;
-
-
-
-
+    private String lieu;
+    private LocalDateTime dateCreation;
+    private Long idCreateurEvenement;
+    private String statut;
 }

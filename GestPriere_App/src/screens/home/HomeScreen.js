@@ -86,7 +86,7 @@ export default function HomeScreen({ navigation, currentUser }) {
 
       <View style={styles.piedDePage}>
         <Ionicons name="moon-outline" size={16} color={colors.textSecondary} />
-        <Text style={styles.textePied}>  GestPrière — Université</Text>
+        <Text style={styles.textePied}>  GestPrière </Text>
       </View>
     </ScrollView>
   );

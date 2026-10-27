@@ -85,6 +85,8 @@ export default function EvenementsScreen() {
   const [refreshing, setRefreshing]       = useState(false);
   const [loadingAction, setLoadingAction] = useState(null);
 
+  const [participations, setParticipations] = useState(new Set());
+
   const [createVisible, setCreateVisible] = useState(false);
   const [newEvent, setNewEvent]           = useState(EMPTY_FORM);
   const [saving, setSaving]               = useState(false);
@@ -114,18 +116,24 @@ export default function EvenementsScreen() {
 
   // ─── Participer / Quitter ─────────────────────────────────────
   const toggleParticipation = async (evenement) => {
-    if (!currentUser?.id) return;
-    const dejaInscrit = (evenement.participantIds || []).includes(currentUser.id);
+    if (!currentUser?.id) {
+      Alert.alert('Erreur', 'Vous devez être connecté.');
+      return;
+    }
+    const dejaInscrit = participations.has(evenement.id);
     setLoadingAction(evenement.id);
     try {
       if (dejaInscrit) {
         await evenementAPI.quitter(evenement.id, currentUser.id);
+        setParticipations(prev => { const s = new Set(prev); s.delete(evenement.id); return s; });
       } else {
         await evenementAPI.participer(evenement.id, currentUser.id);
+        setParticipations(prev => new Set(prev).add(evenement.id));
       }
       fetchEvenements();
-    } catch {
+    } catch (e) {
       Alert.alert('Erreur', 'Action impossible, réessaie.');
+      console.error('toggleParticipation error:', e?.response?.data || e?.message);
     } finally {
       setLoadingAction(null);
     }
@@ -218,10 +226,10 @@ export default function EvenementsScreen() {
   // ─── Render card ─────────────────────────────────────────────
   const renderItem = ({ item }) => {
     const statutStyle    = getStatutStyle(item.statut);
-    const dejaInscrit    = (item.participantIds || []).includes(currentUser?.id);
+    const dejaInscrit    = participations.has(item.id);
     const enCours        = loadingAction === item.id;
     const nbParticipants = (item.participantIds || []).length;
-    const estCreateur    = item.createurEvenement?.id === currentUser?.id;
+    const estCreateur    = item.idCreateurEvenement === currentUser?.id;
 
     return (
       <View style={styles.card}>

@@ -21,8 +21,7 @@ public class Priere {
     private Long id;
 
     @Column(nullable = false)
-    private String nom; // ex: Fajr, Dhuhr, Asr, Maghrib, Isha
-
+    private String nom;
     @Column
     private String description;
 

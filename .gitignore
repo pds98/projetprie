@@ -31,3 +31,17 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Mobile App ###
+GestPriere_App/node_modules/
+GestPriere_App/.expo/
+GestPriere_App/package-lock.json
+
+### OS ###
+.DS_Store
+**/.DS_Store
+
+### Backup / temp ###
+*.bak
+*.bak-*
+src_ousmane_hier/

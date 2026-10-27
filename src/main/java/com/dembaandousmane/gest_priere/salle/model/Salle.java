@@ -1,6 +1,7 @@
 package com.dembaandousmane.gest_priere.salle.model;
 
 import com.dembaandousmane.gest_priere.reservation.model.Reservation;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,6 +32,7 @@ public class Salle {
     private int NumeroSalle;
 
 
+    @JsonIgnore
     @OneToMany(mappedBy = "salle")
     private  List<Reservation> reservations = new ArrayList<>();
 
