@@ -55,12 +55,14 @@ public class MessageService {
 
         Message saved =   messageRepository.save(message);
 
+        String nomAuteur = etudiant.getPrenom() + " " + etudiant.getNom();
         MessageResponseDto responseDto = MessageResponseDto.builder()
                 .id(saved.getId())
                 .contenu(saved.getContenu())
                 .dateCreation(saved.getDateCreation())
                 .forumId(request.getIdForum())
                 .etudiantId(request.getIdEtudiant())
+                .nomAuteur(nomAuteur)
                 .build();
 
 
@@ -77,14 +79,19 @@ public class MessageService {
         java.util.List<Message> messages = forumId != null
                 ? messageRepository.findByForumId(forumId)
                 : messageRepository.findAll();
-        return messages.stream().map(m -> MessageResponseDto.builder()
-                .id(m.getId())
-                .contenu(m.getContenu())
-                .dateCreation(m.getDateCreation())
-                .forumId(m.getForum() != null ? m.getForum().getId() : null)
-                .etudiantId(m.getEtudiant() != null ? m.getEtudiant().getId() : null)
-                .build()
-        ).collect(java.util.stream.Collectors.toList());
+        return messages.stream().map(m -> {
+            String nom = m.getEtudiant() != null
+                    ? m.getEtudiant().getPrenom() + " " + m.getEtudiant().getNom()
+                    : "Inconnu";
+            return MessageResponseDto.builder()
+                    .id(m.getId())
+                    .contenu(m.getContenu())
+                    .dateCreation(m.getDateCreation())
+                    .forumId(m.getForum() != null ? m.getForum().getId() : null)
+                    .etudiantId(m.getEtudiant() != null ? m.getEtudiant().getId() : null)
+                    .nomAuteur(nom)
+                    .build();
+        }).collect(java.util.stream.Collectors.toList());
     }
 
     @Transactional

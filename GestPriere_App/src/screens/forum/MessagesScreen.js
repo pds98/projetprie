@@ -77,13 +77,18 @@ export default function MessagesScreen({ route, navigation }) {
             <Ionicons name="person" size={14} color={colors.primary} />
           </View>
         )}
-        <View style={[styles.msgBubble, isMine ? styles.msgBubbleMine : styles.msgBubbleOther]}>
-          <Text style={[styles.msgText, isMine && styles.msgTextMine]}>
-            {item.contenu || ''}
-          </Text>
-          <Text style={[styles.msgTime, isMine && styles.msgTimeMine]}>
-            {formatTime(item.dateCreation)}
-          </Text>
+        <View style={{ maxWidth: '72%' }}>
+          {!isMine && item.nomAuteur ? (
+            <Text style={styles.authorName}>{item.nomAuteur}</Text>
+          ) : null}
+          <View style={[styles.msgBubble, isMine ? styles.msgBubbleMine : styles.msgBubbleOther]}>
+            <Text style={[styles.msgText, isMine && styles.msgTextMine]}>
+              {item.contenu || ''}
+            </Text>
+            <Text style={[styles.msgTime, isMine && styles.msgTimeMine]}>
+              {formatTime(item.dateCreation)}
+            </Text>
+          </View>
         </View>
       </View>
     );
@@ -182,8 +187,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 4,
   },
+  authorName: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: colors.primary,
+    marginBottom: 3,
+    marginLeft: 4,
+  },
   msgBubble: {
-    maxWidth: '72%',
     borderRadius: 18,
     padding: 10,
     paddingHorizontal: 14,

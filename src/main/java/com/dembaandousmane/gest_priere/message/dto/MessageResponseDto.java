@@ -17,4 +17,5 @@ public class MessageResponseDto {
     private LocalDateTime dateCreation;
     private Long forumId;
     private Long etudiantId;
+    private String nomAuteur;
 }
