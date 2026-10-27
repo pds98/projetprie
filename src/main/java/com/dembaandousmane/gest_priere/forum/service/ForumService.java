@@ -7,6 +7,7 @@ import com.dembaandousmane.gest_priere.forum.dto.ForumDto;
 import com.dembaandousmane.gest_priere.forum.dto.ForumRequestDto;
 import com.dembaandousmane.gest_priere.forum.model.Forum;
 import com.dembaandousmane.gest_priere.forum.repository.ForumRepository;
+import com.dembaandousmane.gest_priere.message.repository.MessageRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,10 +17,12 @@ import java.util.Optional;
 public class ForumService {
      private final EtudiantService etudiantService;
      private final ForumRepository forumRepository;
+     private final MessageRepository messageRepository;
 
-    public ForumService(EtudiantService etudiantService, ForumRepository forumRepository) {
+    public ForumService(EtudiantService etudiantService, ForumRepository forumRepository, MessageRepository messageRepository) {
         this.etudiantService = etudiantService;
         this.forumRepository = forumRepository;
+        this.messageRepository = messageRepository;
     }
 
     public ForumDto creerForum(ForumRequestDto requestDto){
@@ -69,10 +72,9 @@ public class ForumService {
 
    public void supprimerForumParId(Long id){
        Forum forum = trouverForumById(id);
-
-        forum.setEtudiant(null);
-        forumRepository.delete(forum);
-
+       messageRepository.deleteAll(messageRepository.findByForumId(id));
+       forum.setEtudiant(null);
+       forumRepository.delete(forum);
    }
 
    public Forum trouverForumById(Long id){

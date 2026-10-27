@@ -1,0 +1,322 @@
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- ETUDIANT -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <mxCell id="etudiant" value="Etudiant" style="swimlane;fontStyle=1;align=center;startSize=30;fillColor=#1B4332;strokeColor=#2D6A4F;fontColor=#ffffff;fontSize=13;" vertex="1" parent="1">
+      <mxGeometry x="60" y="200" width="280" height="230" as="geometry" />
+    </mxCell>
+    <mxCell id="etudiant_f1" value="+ id : Long" style="text;strokeColor=none;fillColor=#D8F3DC;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="etudiant">
+      <mxGeometry y="30" width="280" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="etudiant_f2" value="+ nom : String" style="text;strokeColor=none;fillColor=#F0FAF3;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="etudiant">
+      <mxGeometry y="58" width="280" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="etudiant_f3" value="+ prenom : String" style="text;strokeColor=none;fillColor=#D8F3DC;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="etudiant">
+      <mxGeometry y="86" width="280" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="etudiant_f4" value="+ email : String" style="text;strokeColor=none;fillColor=#F0FAF3;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="etudiant">
+      <mxGeometry y="114" width="280" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="etudiant_f5" value="+ telephone : String" style="text;strokeColor=none;fillColor=#D8F3DC;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="etudiant">
+      <mxGeometry y="142" width="280" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="etudiant_f6" value="+ motDePasse : String" style="text;strokeColor=none;fillColor=#F0FAF3;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="etudiant">
+      <mxGeometry y="170" width="280" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="etudiant_sep" value="" style="line;strokeColor=#2D6A4F;" vertex="1" parent="etudiant">
+      <mxGeometry y="198" width="280" height="2" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- EVENEMENT -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <mxCell id="evenement" value="Evenement" style="swimlane;fontStyle=1;align=center;startSize=30;fillColor=#1B4332;strokeColor=#2D6A4F;fontColor=#ffffff;fontSize=13;" vertex="1" parent="1">
+      <mxGeometry x="500" y="60" width="310" height="230" as="geometry" />
+    </mxCell>
+    <mxCell id="ev_f1" value="+ id : Long" style="text;strokeColor=none;fillColor=#D8F3DC;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="evenement">
+      <mxGeometry y="30" width="310" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="ev_f2" value="+ nom : String" style="text;strokeColor=none;fillColor=#F0FAF3;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="evenement">
+      <mxGeometry y="58" width="310" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="ev_f3" value="+ description : String" style="text;strokeColor=none;fillColor=#D8F3DC;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="evenement">
+      <mxGeometry y="86" width="310" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="ev_f4" value="+ lieu : String" style="text;strokeColor=none;fillColor=#F0FAF3;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="evenement">
+      <mxGeometry y="114" width="310" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="ev_f5" value="+ dateCreation : LocalDateTime" style="text;strokeColor=none;fillColor=#D8F3DC;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="evenement">
+      <mxGeometry y="142" width="310" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="ev_f6" value="+ estActif : boolean" style="text;strokeColor=none;fillColor=#F0FAF3;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="evenement">
+      <mxGeometry y="170" width="310" height="28" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- GROUPE -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <mxCell id="groupe" value="Groupe" style="swimlane;fontStyle=1;align=center;startSize=30;fillColor=#1B4332;strokeColor=#2D6A4F;fontColor=#ffffff;fontSize=13;" vertex="1" parent="1">
+      <mxGeometry x="500" y="380" width="280" height="130" as="geometry" />
+    </mxCell>
+    <mxCell id="gr_f1" value="+ id : Long" style="text;strokeColor=none;fillColor=#D8F3DC;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="groupe">
+      <mxGeometry y="30" width="280" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="gr_f2" value="+ nom : String" style="text;strokeColor=none;fillColor=#F0FAF3;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="groupe">
+      <mxGeometry y="58" width="280" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="gr_f3" value="+ description : String" style="text;strokeColor=none;fillColor=#D8F3DC;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="groupe">
+      <mxGeometry y="86" width="280" height="28" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- RESERVATION -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <mxCell id="reservation" value="Reservation" style="swimlane;fontStyle=1;align=center;startSize=30;fillColor=#1B4332;strokeColor=#2D6A4F;fontColor=#ffffff;fontSize=13;" vertex="1" parent="1">
+      <mxGeometry x="60" y="560" width="280" height="130" as="geometry" />
+    </mxCell>
+    <mxCell id="rs_f1" value="+ id : Long" style="text;strokeColor=none;fillColor=#D8F3DC;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="reservation">
+      <mxGeometry y="30" width="280" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="rs_f2" value="+ dateDebut : LocalDateTime" style="text;strokeColor=none;fillColor=#F0FAF3;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="reservation">
+      <mxGeometry y="58" width="280" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="rs_f3" value="+ dateFin : LocalDateTime" style="text;strokeColor=none;fillColor=#D8F3DC;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="reservation">
+      <mxGeometry y="86" width="280" height="28" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- FORUM -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <mxCell id="forum" value="Forum" style="swimlane;fontStyle=1;align=center;startSize=30;fillColor=#1B4332;strokeColor=#2D6A4F;fontColor=#ffffff;fontSize=13;" vertex="1" parent="1">
+      <mxGeometry x="500" y="600" width="280" height="130" as="geometry" />
+    </mxCell>
+    <mxCell id="fo_f1" value="+ id : Long" style="text;strokeColor=none;fillColor=#D8F3DC;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="forum">
+      <mxGeometry y="30" width="280" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="fo_f2" value="+ titre : String" style="text;strokeColor=none;fillColor=#F0FAF3;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="forum">
+      <mxGeometry y="58" width="280" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="fo_f3" value="+ contenu : String" style="text;strokeColor=none;fillColor=#D8F3DC;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="forum">
+      <mxGeometry y="86" width="280" height="28" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- MESSAGE -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <mxCell id="message" value="Message" style="swimlane;fontStyle=1;align=center;startSize=30;fillColor=#1B4332;strokeColor=#2D6A4F;fontColor=#ffffff;fontSize=13;" vertex="1" parent="1">
+      <mxGeometry x="900" y="600" width="280" height="130" as="geometry" />
+    </mxCell>
+    <mxCell id="ms_f1" value="+ id : Long" style="text;strokeColor=none;fillColor=#D8F3DC;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="message">
+      <mxGeometry y="30" width="280" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="ms_f2" value="+ contenu : String" style="text;strokeColor=none;fillColor=#F0FAF3;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="message">
+      <mxGeometry y="58" width="280" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="ms_f3" value="+ dateEnvoi : LocalDateTime" style="text;strokeColor=none;fillColor=#D8F3DC;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="message">
+      <mxGeometry y="86" width="280" height="28" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- LoginResponseDto -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <mxCell id="loginDto" value="&lt;&lt;DTO&gt;&gt; LoginResponseDto" style="swimlane;fontStyle=3;align=center;startSize=30;fillColor=#2E6DA4;strokeColor=#1A3A5C;fontColor=#ffffff;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="950" y="60" width="280" height="158" as="geometry" />
+    </mxCell>
+    <mxCell id="ld_f1" value="+ id : Long" style="text;strokeColor=none;fillColor=#EAF4FB;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="loginDto">
+      <mxGeometry y="30" width="280" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="ld_f2" value="+ email : String" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="loginDto">
+      <mxGeometry y="58" width="280" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="ld_f3" value="+ prenom : String" style="text;strokeColor=none;fillColor=#EAF4FB;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="loginDto">
+      <mxGeometry y="86" width="280" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="ld_f4" value="+ nom : String" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="loginDto">
+      <mxGeometry y="114" width="280" height="28" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- InscriptionResponseDto -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <mxCell id="inscriptionDto" value="&lt;&lt;DTO&gt;&gt; InscriptionResponseDto" style="swimlane;fontStyle=3;align=center;startSize=30;fillColor=#2E6DA4;strokeColor=#1A3A5C;fontColor=#ffffff;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="950" y="280" width="280" height="130" as="geometry" />
+    </mxCell>
+    <mxCell id="id_f1" value="+ id : Long" style="text;strokeColor=none;fillColor=#EAF4FB;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="inscriptionDto">
+      <mxGeometry y="30" width="280" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="id_f2" value="+ email : String" style="text;strokeColor=none;fillColor=#FFFFFF;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="inscriptionDto">
+      <mxGeometry y="58" width="280" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="id_f3" value="+ prenom : String" style="text;strokeColor=none;fillColor=#EAF4FB;align=left;verticalAlign=middle;spacingLeft=10;fontSize=11;" vertex="1" parent="inscriptionDto">
+      <mxGeometry y="86" width="280" height="28" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- TABLE DE JOINTURE labels -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <mxCell id="join1" value="&lt;&lt;join table&gt;&gt;&#xa;participation_evenement" style="text;strokeColor=#B7770D;fillColor=#FCF3CF;align=center;fontStyle=2;fontSize=10;rounded=1;" vertex="1" parent="1">
+      <mxGeometry x="310" y="115" width="170" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="join2" value="&lt;&lt;join table&gt;&gt;&#xa;groupe_membre" style="text;strokeColor=#B7770D;fillColor=#FCF3CF;align=center;fontStyle=2;fontSize=10;rounded=1;" vertex="1" parent="1">
+      <mxGeometry x="310" y="395" width="170" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- RELATIONS -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+
+    <!-- Etudiant → Evenement : cree (1 -> 0..*) -->
+    <mxCell id="rel_cree_ev" value="cree" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;strokeColor=#1B4332;strokeWidth=2;fontColor=#1B4332;fontStyle=1;fontSize=10;" edge="1" source="etudiant" target="evenement" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="200" y="175" />
+          <mxPoint x="200" y="80" />
+          <mxPoint x="500" y="80" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="lbl_cree_ev_src" value="1" style="resizable=0;html=1;align=left;fontSize=11;fontStyle=1;" connectable="0" vertex="1" parent="rel_cree_ev">
+      <mxGeometry x="-0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+    <mxCell id="lbl_cree_ev_tgt" value="0..*" style="resizable=0;html=1;align=right;fontSize=11;fontStyle=1;" connectable="0" vertex="1" parent="rel_cree_ev">
+      <mxGeometry x="0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+
+    <!-- Etudiant <-> Evenement : participe (ManyToMany) -->
+    <mxCell id="rel_part_ev" value="participe a" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;startArrow=open;startFill=0;strokeColor=#2D6A4F;strokeWidth=2;fontColor=#2D6A4F;fontStyle=1;fontSize=10;dashed=1;" edge="1" source="etudiant" target="evenement" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="200" y="175" />
+          <mxPoint x="200" y="130" />
+          <mxPoint x="500" y="130" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="lbl_part_src" value="0..*" style="resizable=0;html=1;align=left;fontSize=11;fontStyle=1;" connectable="0" vertex="1" parent="rel_part_ev">
+      <mxGeometry x="-0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+    <mxCell id="lbl_part_tgt" value="0..*" style="resizable=0;html=1;align=right;fontSize=11;fontStyle=1;" connectable="0" vertex="1" parent="rel_part_ev">
+      <mxGeometry x="0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+
+    <!-- Etudiant → Groupe : cree (1 -> 0..*) -->
+    <mxCell id="rel_cree_gr" value="cree" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;strokeColor=#1B4332;strokeWidth=2;fontColor=#1B4332;fontStyle=1;fontSize=10;" edge="1" source="etudiant" target="groupe" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="340" y="380" />
+          <mxPoint x="340" y="410" />
+          <mxPoint x="500" y="410" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="lbl_cree_gr_src" value="1" style="resizable=0;html=1;align=left;fontSize=11;fontStyle=1;" connectable="0" vertex="1" parent="rel_cree_gr">
+      <mxGeometry x="-0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+    <mxCell id="lbl_cree_gr_tgt" value="0..*" style="resizable=0;html=1;align=right;fontSize=11;fontStyle=1;" connectable="0" vertex="1" parent="rel_cree_gr">
+      <mxGeometry x="0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+
+    <!-- Etudiant <-> Groupe : membre (ManyToMany) -->
+    <mxCell id="rel_membre" value="membre de" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;startArrow=open;startFill=0;strokeColor=#2D6A4F;strokeWidth=2;fontColor=#2D6A4F;fontStyle=1;fontSize=10;dashed=1;" edge="1" source="etudiant" target="groupe" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="340" y="380" />
+          <mxPoint x="340" y="450" />
+          <mxPoint x="500" y="450" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="lbl_membre_src" value="0..*" style="resizable=0;html=1;align=left;fontSize=11;fontStyle=1;" connectable="0" vertex="1" parent="rel_membre">
+      <mxGeometry x="-0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+    <mxCell id="lbl_membre_tgt" value="0..*" style="resizable=0;html=1;align=right;fontSize=11;fontStyle=1;" connectable="0" vertex="1" parent="rel_membre">
+      <mxGeometry x="0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+
+    <!-- Etudiant → Reservation (1 -> 0..*) -->
+    <mxCell id="rel_res" value="possede" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;strokeColor=#1B4332;strokeWidth=2;fontColor=#1B4332;fontStyle=1;fontSize=10;" edge="1" source="etudiant" target="reservation" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="lbl_res_src" value="1" style="resizable=0;html=1;align=left;fontSize=11;fontStyle=1;" connectable="0" vertex="1" parent="rel_res">
+      <mxGeometry x="-0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+    <mxCell id="lbl_res_tgt" value="0..*" style="resizable=0;html=1;align=right;fontSize=11;fontStyle=1;" connectable="0" vertex="1" parent="rel_res">
+      <mxGeometry x="0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+
+    <!-- Etudiant → Forum (1 -> 0..*) -->
+    <mxCell id="rel_forum" value="cree" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;strokeColor=#1B4332;strokeWidth=2;fontColor=#1B4332;fontStyle=1;fontSize=10;" edge="1" source="etudiant" target="forum" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="200" y="430" />
+          <mxPoint x="200" y="665" />
+          <mxPoint x="500" y="665" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="lbl_forum_src" value="1" style="resizable=0;html=1;align=left;fontSize=11;fontStyle=1;" connectable="0" vertex="1" parent="rel_forum">
+      <mxGeometry x="-0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+    <mxCell id="lbl_forum_tgt" value="0..*" style="resizable=0;html=1;align=right;fontSize=11;fontStyle=1;" connectable="0" vertex="1" parent="rel_forum">
+      <mxGeometry x="0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+
+    <!-- Etudiant → Message (1 -> 0..*) -->
+    <mxCell id="rel_msg" value="envoie" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;strokeColor=#1B4332;strokeWidth=2;fontColor=#1B4332;fontStyle=1;fontSize=10;" edge="1" source="etudiant" target="message" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="200" y="430" />
+          <mxPoint x="200" y="730" />
+          <mxPoint x="1040" y="730" />
+          <mxPoint x="1040" y="730" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="lbl_msg_src" value="1" style="resizable=0;html=1;align=left;fontSize=11;fontStyle=1;" connectable="0" vertex="1" parent="rel_msg">
+      <mxGeometry x="-0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+    <mxCell id="lbl_msg_tgt" value="0..*" style="resizable=0;html=1;align=right;fontSize=11;fontStyle=1;" connectable="0" vertex="1" parent="rel_msg">
+      <mxGeometry x="0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+
+    <!-- Forum → Message (1 -> 0..*) -->
+    <mxCell id="rel_fo_msg" value="contient" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;strokeColor=#1B4332;strokeWidth=2;fontColor=#1B4332;fontStyle=1;fontSize=10;" edge="1" source="forum" target="message" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="lbl_fo_msg_src" value="1" style="resizable=0;html=1;align=left;fontSize=11;fontStyle=1;" connectable="0" vertex="1" parent="rel_fo_msg">
+      <mxGeometry x="-0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+    <mxCell id="lbl_fo_msg_tgt" value="0..*" style="resizable=0;html=1;align=right;fontSize=11;fontStyle=1;" connectable="0" vertex="1" parent="rel_fo_msg">
+      <mxGeometry x="0.85" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+    </mxCell>
+
+    <!-- Etudiant ..> LoginResponseDto (dependency) -->
+    <mxCell id="rel_login_dto" value="&lt;&lt;retourne au login&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;strokeColor=#2E6DA4;strokeWidth=1.5;fontColor=#2E6DA4;fontStyle=2;fontSize=10;dashed=1;" edge="1" source="etudiant" target="loginDto" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="340" y="220" />
+          <mxPoint x="850" y="220" />
+          <mxPoint x="850" y="130" />
+          <mxPoint x="950" y="130" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- Etudiant ..> InscriptionResponseDto (dependency) -->
+    <mxCell id="rel_inscr_dto" value="&lt;&lt;retourne a l'inscription&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;strokeColor=#2E6DA4;strokeWidth=1.5;fontColor=#2E6DA4;fontStyle=2;fontSize=10;dashed=1;" edge="1" source="etudiant" target="inscriptionDto" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="340" y="260" />
+          <mxPoint x="870" y="260" />
+          <mxPoint x="870" y="340" />
+          <mxPoint x="950" y="340" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+  </root>
+</mxGraphModel>
