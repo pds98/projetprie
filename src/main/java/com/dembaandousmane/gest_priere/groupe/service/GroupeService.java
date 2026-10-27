@@ -4,25 +4,42 @@ package com.dembaandousmane.gest_priere.groupe.service;
 import com.dembaandousmane.gest_priere.etudiant.model.Etudiant;
 import com.dembaandousmane.gest_priere.etudiant.repository.EtudiantRepository;
 import com.dembaandousmane.gest_priere.etudiant.service.EtudiantService;
-import com.dembaandousmane.gest_priere.groupe.controllers.GroupeController;
 import com.dembaandousmane.gest_priere.groupe.dto.GroupeDtoResponse;
 import com.dembaandousmane.gest_priere.groupe.dto.GroupeRequestDto;
 import com.dembaandousmane.gest_priere.groupe.model.Groupe;
 import com.dembaandousmane.gest_priere.groupe.repository.GroupeRepository;
-import com.dembaandousmane.gest_priere.reservation.model.Reservation;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class GroupeService {
 
     private final EtudiantService etudiantService;
+    private final EtudiantRepository etudiantRepository;
     private final GroupeRepository groupeRepository;
 
-    public GroupeService(EtudiantService etudiantService, GroupeRepository groupeRepository) {
+    public GroupeService(EtudiantService etudiantService, EtudiantRepository etudiantRepository, GroupeRepository groupeRepository) {
         this.etudiantService = etudiantService;
+        this.etudiantRepository = etudiantRepository;
         this.groupeRepository = groupeRepository;
+    }
+
+    private GroupeDtoResponse toDto(Groupe g) {
+        List<Long> membreIds = g.getMembres().stream()
+                .map(Etudiant::getId)
+                .collect(Collectors.toList());
+        return GroupeDtoResponse.builder()
+                .id(g.getId())
+                .nom(g.getNom())
+                .description(g.getDescription())
+                .createurNom(g.getCreateurGroupe() != null ? g.getCreateurGroupe().getNom() : "")
+                .createurId(g.getCreateurGroupe() != null ? g.getCreateurGroupe().getId() : null)
+                .membre(membreIds.size())
+                .membreIds(membreIds)
+                .build();
     }
 
     public GroupeDtoResponse creerGroupe(GroupeRequestDto requestDto){
@@ -46,13 +63,7 @@ public class GroupeService {
         e.creerGroupe(g);
 
         Groupe saved = groupeRepository.save(g);
-
-        GroupeDtoResponse groupeDtoResponse = GroupeDtoResponse.builder().id(saved.getId()).nom(saved.getNom())
-                .description(saved.getDescription())
-                .createurNom(saved.getCreateurGroupe().getNom())
-                .build();
-
-        return groupeDtoResponse;
+        return toDto(saved);
 
 
     }
@@ -70,34 +81,29 @@ public class GroupeService {
 
     }
 
+    @Transactional
     public void rejoindreGroupe(Long groupeId, Long etudiantId){
-
-        if(groupeId == 0 || etudiantId == 0){
-            throw new RuntimeException("le groupe id , etudiant id");
-        }
-
         Groupe groupe = groupeRepository.findById(groupeId).orElseThrow(() -> new RuntimeException("groupe existe pas"));
         Etudiant etudiant = etudiantService.trouverEtudiantParId(etudiantId);
 
-        etudiant.rejoindreGroupe(groupe);
-
-
+        if (!etudiant.getGroupesRejoins().contains(groupe)) {
+            etudiant.rejoindreGroupe(groupe);
+            etudiantRepository.save(etudiant);
+        }
     }
 
+    @Transactional
     public void quitterGroupe(Long groupeId, Long etudiantId){
-
-
-        if(groupeId == 0 || etudiantId == 0){
-            throw new RuntimeException("le groupe id , etudiant id");
-        }
-
         Groupe groupe = groupeRepository.findById(groupeId).orElseThrow(() -> new RuntimeException("groupe existe pas"));
         Etudiant etudiant = etudiantService.trouverEtudiantParId(etudiantId);
 
         etudiant.quitterGroupe(groupe);
+        etudiantRepository.save(etudiant);
     }
 
-    public List<Groupe> avoirToutlesGroupe(){
-       return  groupeRepository.findAll();
+    public List<GroupeDtoResponse> avoirToutlesGroupe(){
+        return groupeRepository.findAll().stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
     }
 }

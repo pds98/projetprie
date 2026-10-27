@@ -18,7 +18,9 @@ public class GroupeDtoResponse {
     private String nom;
     private String description;
     private String createurNom;
+    private Long createurId;
     private int membre;
+    private java.util.List<Long> membreIds;
 
 
 

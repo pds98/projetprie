@@ -72,12 +72,15 @@ export default function GroupeScreen() {
     try {
       if (dejaInscrit) {
         await groupeAPI.quitter(groupe.id, currentUser.id);
+        Alert.alert('Groupe quitté', `Vous avez quitté "${groupe.nom}".`);
       } else {
         await groupeAPI.rejoindre(groupe.id, currentUser.id);
+        Alert.alert('Bienvenue ! 🎉', `Vous avez rejoint "${groupe.nom}" avec succès.`);
       }
       fetchGroupes();
-    } catch {
-      Alert.alert('Erreur', 'Action impossible, réessaie.');
+    } catch (e) {
+      const msg = e?.response?.data?.message || e?.message || 'Action impossible, réessaie.';
+      Alert.alert('Erreur', msg);
     } finally {
       setLoadingAction(null);
     }
@@ -101,7 +104,7 @@ export default function GroupeScreen() {
 
   const renderItem = ({ item }) => {
     const dejaInscrit = (item.membreIds || []).includes(currentUser?.id);
-    const estCreateur = item.createurGroupe?.id === currentUser?.id;
+    const estCreateur = item.createurId === currentUser?.id;
     const enCours = loadingAction === item.id;
     const nbMembres = (item.membreIds || []).length;
 
@@ -121,12 +124,10 @@ export default function GroupeScreen() {
             <Ionicons name="people-outline" size={13} color={colors.textSecondary} />
             <Text style={styles.metaText}>{nbMembres} membre(s)</Text>
           </View>
-          {item.createurGroupe ? (
+          {item.createurNom ? (
             <View style={styles.metaRow}>
               <Ionicons name="person-outline" size={13} color={colors.textSecondary} />
-              <Text style={styles.metaText}>
-                Créé par {item.createurGroupe.prenom} {item.createurGroupe.nom}
-              </Text>
+              <Text style={styles.metaText}>Créé par {item.createurNom}</Text>
             </View>
           ) : null}
 
