@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {
   View, Text, TextInput, TouchableOpacity, StyleSheet,
-  ScrollView, ActivityIndicator, Alert, Modal, FlatList,
+  ScrollView, ActivityIndicator, Alert, Modal, FlatList, Platform,
 } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { Ionicons } from '@expo/vector-icons';
 import { reservationAPI, salleAPI, priereAPI } from '../../api/apiService';
 import colors from '../../theme/colors';
@@ -15,12 +16,17 @@ export default function ReservationFormScreen({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [priereModalVisible, setPriereModalVisible] = useState(false);
 
+  // DateTimePicker state
+  const [debutDate, setDebutDate]       = useState(new Date());
+  const [finDate, setFinDate]           = useState(new Date());
+  const [pickerTarget, setPickerTarget] = useState(null); // 'debut' | 'fin'
+  const [pickerMode, setPickerMode]     = useState('date'); // 'date' | 'time'
+  const [showPicker, setShowPicker]     = useState(false);
+
   const [form, setForm] = useState({
     idSalle: '',
     idPriere: '',
-    nomPriere: '',   // juste pour afficher le nom choisi
-    debut: '',
-    fin: '',
+    nomPriere: '',
     nombrePersonnes: '',
     motif: '',
   });
@@ -40,34 +46,56 @@ export default function ReservationFormScreen({ navigation }) {
   const handleChange = (field, value) =>
     setForm(prev => ({ ...prev, [field]: value }));
 
-  // Convertit JJ/MM/AAAA HH:MM → ISO
-  const parseDate = (str) => {
-    const m = str.trim().match(/^(\d{2})\/(\d{2})\/(\d{4})\s+(\d{2}):(\d{2})$/);
-    if (!m) return null;
-    const [, dd, mm, yyyy, hh, min] = m;
-    return `${yyyy}-${mm}-${dd}T${hh}:${min}:00`;
+  const formatDateDisplay = (date) =>
+    date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' })
+    + '  ' +
+    date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+
+  const openPicker = (target) => {
+    setPickerTarget(target);
+    setPickerMode('date');
+    setShowPicker(true);
+  };
+
+  const onPickerChange = (event, selectedDate) => {
+    if (event.type === 'dismissed') {
+      setShowPicker(false);
+      return;
+    }
+    const current = selectedDate || (pickerTarget === 'debut' ? debutDate : finDate);
+    if (pickerMode === 'date') {
+      if (pickerTarget === 'debut') setDebutDate(current);
+      else setFinDate(current);
+      setPickerMode('time');
+    } else {
+      if (pickerTarget === 'debut') setDebutDate(current);
+      else setFinDate(current);
+      setShowPicker(false);
+    }
   };
 
   const handleSubmit = async () => {
-    const { idSalle, debut, fin, nombrePersonnes } = form;
-    if (!idSalle || !debut || !fin || !nombrePersonnes) {
-      Alert.alert('Champs requis', 'Salle, dates et nombre de personnes sont obligatoires.');
+    const { idSalle, nombrePersonnes } = form;
+    if (!idSalle || !nombrePersonnes) {
+      Alert.alert('Champs requis', 'Salle et nombre de personnes sont obligatoires.');
       return;
     }
-    const debutISO = parseDate(debut);
-    const finISO   = parseDate(fin);
-    if (!debutISO || !finISO) {
-      Alert.alert('Format de date invalide', 'Utilisez le format :\nJJ/MM/AAAA HH:MM\nEx : 25/04/2026 13:00');
+    if (finDate <= debutDate) {
+      Alert.alert('Dates invalides', 'L\'heure de fin doit être après l\'heure de début.');
       return;
     }
+    const toISO = (d) => {
+      const pad = (n) => String(n).padStart(2, '0');
+      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}:00`;
+    };
     setLoading(true);
     try {
       await reservationAPI.create({
         idSalle:         parseInt(idSalle),
         idEtudiant:      currentUser?.id || 1,
         idPriere:        form.idPriere ? parseInt(form.idPriere) : null,
-        debut:           debutISO,
-        fin:             finISO,
+        debut:           toISO(debutDate),
+        fin:             toISO(finDate),
         nombrePersonnes: parseInt(nombrePersonnes),
         motif:           form.motif || '',
         estReserver:     true,
@@ -137,30 +165,18 @@ export default function ReservationFormScreen({ navigation }) {
           <Text style={styles.sectionTitle}>Horaires</Text>
 
           <Text style={styles.label}>Début</Text>
-          <View style={styles.inputRow}>
-            <Ionicons name="calendar-outline" size={16} color={colors.textSecondary} style={styles.inputIcon} />
-            <TextInput
-              style={styles.input}
-              placeholder="JJ/MM/AAAA HH:MM   ex : 25/04/2026 13:00"
-              placeholderTextColor={colors.textSecondary}
-              value={form.debut}
-              onChangeText={v => handleChange('debut', v)}
-              keyboardType="numbers-and-punctuation"
-            />
-          </View>
+          <TouchableOpacity style={styles.dateBtn} onPress={() => openPicker('debut')} activeOpacity={0.7}>
+            <Ionicons name="calendar-outline" size={18} color={colors.primary} style={styles.inputIcon} />
+            <Text style={styles.dateBtnText}>{formatDateDisplay(debutDate)}</Text>
+            <Ionicons name="chevron-forward" size={16} color={colors.textSecondary} />
+          </TouchableOpacity>
 
           <Text style={[styles.label, { marginTop: 12 }]}>Fin</Text>
-          <View style={styles.inputRow}>
-            <Ionicons name="calendar-outline" size={16} color={colors.textSecondary} style={styles.inputIcon} />
-            <TextInput
-              style={styles.input}
-              placeholder="JJ/MM/AAAA HH:MM   ex : 25/04/2026 14:00"
-              placeholderTextColor={colors.textSecondary}
-              value={form.fin}
-              onChangeText={v => handleChange('fin', v)}
-              keyboardType="numbers-and-punctuation"
-            />
-          </View>
+          <TouchableOpacity style={styles.dateBtn} onPress={() => openPicker('fin')} activeOpacity={0.7}>
+            <Ionicons name="calendar-outline" size={18} color={colors.primary} style={styles.inputIcon} />
+            <Text style={styles.dateBtnText}>{formatDateDisplay(finDate)}</Text>
+            <Ionicons name="chevron-forward" size={16} color={colors.textSecondary} />
+          </TouchableOpacity>
         </View>
 
         {/* ── Détails ── */}
@@ -206,6 +222,18 @@ export default function ReservationFormScreen({ navigation }) {
           }
         </TouchableOpacity>
       </ScrollView>
+
+      {/* ── DateTimePicker ── */}
+      {showPicker && (
+        <DateTimePicker
+          value={pickerTarget === 'debut' ? debutDate : finDate}
+          mode={pickerMode}
+          display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+          onChange={onPickerChange}
+          minimumDate={pickerMode === 'date' ? new Date() : undefined}
+          locale="fr-FR"
+        />
+      )}
 
       {/* ── Modal liste déroulante prières ── */}
       <Modal visible={priereModalVisible} transparent animationType="slide">
@@ -316,6 +344,14 @@ const styles = StyleSheet.create({
   },
   inputIcon: { marginRight: 8 },
   input:     { flex: 1, fontSize: 14, color: colors.text },
+
+  // Date picker button
+  dateBtn: {
+    flexDirection: 'row', alignItems: 'center', backgroundColor: colors.surface,
+    borderWidth: 1.5, borderColor: colors.primary + '60', borderRadius: 12,
+    paddingHorizontal: 14, height: 52,
+  },
+  dateBtnText: { flex: 1, fontSize: 15, fontWeight: '600', color: colors.text },
 
   // Bouton soumettre
   submitBtn: {

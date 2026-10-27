@@ -50,11 +50,16 @@ export default function ForumScreen({ navigation }) {
       Alert.alert('Requis', 'Le sujet ne peut pas être vide.');
       return;
     }
+    if (!currentUser?.id) {
+      Alert.alert('Erreur', 'Vous devez être connecté pour créer un sujet.');
+      return;
+    }
     setCreating(true);
     try {
       await forumAPI.create({
-        sujet:      newSujet.trim(),
-        idEtudiant: currentUser?.id || null,
+        sujet:        newSujet.trim(),
+        idEtudiant:   currentUser.id,
+        dateCreation: new Date().toISOString(),
       });
       setNewSujet('');
       setCreateVisible(false);

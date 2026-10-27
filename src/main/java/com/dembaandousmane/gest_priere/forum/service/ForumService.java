@@ -39,7 +39,7 @@ public class ForumService {
 
         Forum forum = Forum.builder()
                 .sujet(requestDto.getSujet())
-                .dateCreation(requestDto.getDateCreation())
+                .dateCreation(requestDto.getDateCreation() != null ? requestDto.getDateCreation() : java.time.LocalDateTime.now())
                 .etudiant(etudiant)
                 .build();
 
@@ -54,6 +54,17 @@ public class ForumService {
 
    public List<Forum> getTousLesForums(){
        return forumRepository.findAll();
+   }
+
+   public ForumDto modifierForum(Long id, ForumRequestDto requestDto){
+       Forum forum = trouverForumById(id);
+       if(requestDto.getSujet() != null && !requestDto.getSujet().isBlank()){
+           forum.setSujet(requestDto.getSujet());
+       }
+       Forum saved = forumRepository.save(forum);
+       return ForumDto.builder().id(saved.getId())
+               .dateCreation(saved.getDateCreation())
+               .sujet(saved.getSujet()).build();
    }
 
    public void supprimerForumParId(Long id){

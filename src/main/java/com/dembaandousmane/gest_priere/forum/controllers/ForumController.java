@@ -31,6 +31,11 @@ public class ForumController {
         return forumService.creerForum(forumRequestDto);
     }
 
+    @PutMapping("/{idForum}")
+    public ForumDto modifierForum(@PathVariable Long idForum, @RequestBody ForumRequestDto forumRequestDto){
+        return forumService.modifierForum(idForum, forumRequestDto);
+    }
+
     @DeleteMapping("/{idForum}")
     @Transactional
     public void supprimerForumParId(@PathVariable Long idForum){
