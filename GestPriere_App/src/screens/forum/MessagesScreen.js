@@ -27,12 +27,8 @@ export default function MessagesScreen({ route, navigation }) {
 
   const fetchMessages = async () => {
     try {
-      const res = await messageAPI.getAll();
-      // Filtrer par forum si les messages ont un idForum
-      const filtered = res.data.filter(
-        (m) => !m.idForum || m.idForum === forum.idForum
-      );
-      setMessages(filtered);
+      const res = await messageAPI.getByForum(forum.id);
+      setMessages(res.data);
     } catch {
       Alert.alert('Erreur', 'Impossible de charger les messages.');
     } finally {
@@ -72,9 +68,8 @@ export default function MessagesScreen({ route, navigation }) {
     });
   };
 
-  const renderMessage = ({ item, index }) => {
-    // Alternance pour simulation (à remplacer par idEtudiant réel)
-    const isMine = index % 2 === 0;
+  const renderMessage = ({ item }) => {
+    const isMine = item.etudiantId === currentUser?.id;
     return (
       <View style={[styles.msgRow, isMine && styles.msgRowMine]}>
         {!isMine && (
@@ -84,10 +79,10 @@ export default function MessagesScreen({ route, navigation }) {
         )}
         <View style={[styles.msgBubble, isMine ? styles.msgBubbleMine : styles.msgBubbleOther]}>
           <Text style={[styles.msgText, isMine && styles.msgTextMine]}>
-            {item.contenu || item.message || ''}
+            {item.contenu || ''}
           </Text>
           <Text style={[styles.msgTime, isMine && styles.msgTimeMine]}>
-            {formatTime(item.dateEnvoi)}
+            {formatTime(item.dateCreation)}
           </Text>
         </View>
       </View>

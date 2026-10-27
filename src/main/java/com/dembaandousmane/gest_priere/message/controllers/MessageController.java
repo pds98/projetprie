@@ -18,11 +18,14 @@ public class MessageController {
         this.messageService = messageService;
     }
 
+    @GetMapping
+    public java.util.List<MessageResponseDto> getMessages(@RequestParam(required = false) Long forumId) {
+        return messageService.getMessagesByForum(forumId);
+    }
+
     @PostMapping
     public MessageResponseDto creerMessage(@RequestBody MessageRequestDto messageRequestDto){
-
-       return  messageService.creerMessage(messageRequestDto);
-
+       return messageService.creerMessage(messageRequestDto);
     }
 
     @DeleteMapping("/{messageId}")

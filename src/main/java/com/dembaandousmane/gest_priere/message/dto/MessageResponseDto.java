@@ -12,8 +12,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class MessageResponseDto {
 
-    private Long id ;
+    private Long id;
     private String contenu;
     private LocalDateTime dateCreation;
-    private int forumId;
+    private Long forumId;
+    private Long etudiantId;
 }

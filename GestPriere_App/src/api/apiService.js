@@ -83,6 +83,7 @@ export const forumAPI = {
 // ─── MESSAGES ─────────────────────────────────────────────
 export const messageAPI = {
   getAll: () => api.get('/messages'),
+  getByForum: (forumId) => api.get('/messages', { params: { forumId } }),
   getById: (id) => api.get(`/messages/${id}`),
   create: (data) => api.post('/messages', data),
   delete: (id) => api.delete(`/messages/${id}`),
